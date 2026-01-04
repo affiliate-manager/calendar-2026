@@ -480,42 +480,132 @@ class LandlordYearbook {
 
   getRelevantExpert(event) {
     if (!event) return LYB_EXPERTS[0];
-    const map = {
-      'tax': LYB_EXPERTS.find(e => e.name === 'Zee Razaq') || LYB_EXPERTS[0],
-      'rate': LYB_EXPERTS.find(e => e.name === 'Jack Smith') || LYB_EXPERTS[7],
-      'reform': LYB_EXPERTS.find(e => e.name === 'Vanessa Warwick') || LYB_EXPERTS[3],
-      'event': LYB_EXPERTS.find(e => e.name === 'Jamie York') || LYB_EXPERTS[1],
-      'stats': LYB_EXPERTS.find(e => e.name === 'Matt Brighton') || LYB_EXPERTS[2],
-      'holiday': LYB_EXPERTS.find(e => e.name === 'Fontaine Brothers') || LYB_EXPERTS[5]
+    
+    // Map event categories to relevant experts based on expertise
+    const categoryExpertMap = {
+      'tax-fiscal': ['Zee Razaq'],  // Finance, Tax, SPV Advice
+      'economic': ['Matt Brighton', 'John Howard'],  // Data, Analytics, Institutional
+      'energy': ['Honest Property Sisters', 'Matt Brighton'],  // Sustainability, DIY Renovation
+      'property': ['Vanessa Warwick', 'Vijay Singh', 'Emma Fildes'],  // Due Diligence, BTL, Buying Agency
+      'training': ['Jamie York', 'James Coupland'],  // Education, Academy
+      'conference': ['Jack Smith', 'John Howard'],  // Portfolio Scaling, Institutional
+      'auction': ['Harvey Growth', 'Sean Land', 'Emma Fildes'],  // Sourcing, Negotiation
+      'holiday': ['Fontaine Brothers', 'Lewis Dawson']  // Systemization, SA
     };
-    return map[event.category] || LYB_EXPERTS[0];
+    
+    // Get expert names for this category
+    const expertNames = categoryExpertMap[event.category] || [];
+    
+    // Find matching expert
+    if (expertNames.length > 0) {
+      const expert = LYB_EXPERTS.find(e => expertNames.includes(e.name));
+      if (expert) return expert;
+    }
+    
+    // Fallback: Match based on keywords in event title/description
+    const eventText = (event.title + ' ' + event.desc).toLowerCase();
+    
+    // Keyword-based matching
+    if (eventText.includes('tax') || eventText.includes('mtd') || eventText.includes('corporation') || eventText.includes('vat')) {
+      return LYB_EXPERTS.find(e => e.name === 'Zee Razaq') || LYB_EXPERTS[0];
+    }
+    if (eventText.includes('auction') || eventText.includes('sourcing')) {
+      return LYB_EXPERTS.find(e => e.name === 'Harvey Growth') || LYB_EXPERTS[6];
+    }
+    if (eventText.includes('data') || eventText.includes('statistics') || eventText.includes('index')) {
+      return LYB_EXPERTS.find(e => e.name === 'Matt Brighton') || LYB_EXPERTS[2];
+    }
+    if (eventText.includes('training') || eventText.includes('webinar') || eventText.includes('nrla')) {
+      return LYB_EXPERTS.find(e => e.name === 'Jamie York') || LYB_EXPERTS[1];
+    }
+    if (eventText.includes('energy') || eventText.includes('epc') || eventText.includes('sustainability')) {
+      return LYB_EXPERTS.find(e => e.name === 'Honest Property Sisters') || LYB_EXPERTS[14];
+    }
+    if (eventText.includes('development') || eventText.includes('planning') || eventText.includes('land')) {
+      return LYB_EXPERTS.find(e => e.name === 'Sean Land') || LYB_EXPERTS[16];
+    }
+    if (eventText.includes('licensing') || eventText.includes('regulation') || eventText.includes('reform')) {
+      return LYB_EXPERTS.find(e => e.name === 'Vanessa Warwick') || LYB_EXPERTS[3];
+    }
+    
+    // Default fallback
+    return LYB_EXPERTS[0];
   }
 
   getExpertHelpText(expert, event) {
     const helpTexts = {
       'Zee Razaq': {
-        'tax': `Zee can help you optimise your tax position and ensure MTD compliance ahead of this deadline.`,
+        'tax-fiscal': `Zee can help you optimise your tax position and ensure MTD compliance ahead of this deadline.`,
         'default': `Zee specialises in Finance, Tax, Virtual FD and SPV advice to help maximise your returns.`
       },
       'Jamie York': {
-        'event': `Jamie can help you network effectively and source high-value deals at this event.`,
+        'training': `Jamie can help you master property investment strategies through hands-on education.`,
+        'conference': `Jamie can help you network effectively and source high-value deals at this event.`,
         'default': `Jamie specialises in BRR sourcing and portfolio scaling education for serious investors.`
       },
       'Matt Brighton': {
-        'stats': `Matt can help you analyse this data release and identify market opportunities.`,
+        'economic': `Matt can help you analyse this data release and identify market opportunities.`,
+        'energy': `Matt can advise on DIY renovation approaches to improve your property's energy efficiency.`,
         'default': `Matt provides data analytics and property insights to inform your investment decisions.`
       },
       'Vanessa Warwick': {
-        'reform': `Vanessa can guide you through regulatory changes and ensure portfolio compliance.`,
+        'property': `Vanessa can guide you through due diligence and ensure you're making informed decisions.`,
         'default': `Vanessa offers peer support and due diligence expertise through Property Tribes.`
       },
       'Jack Smith': {
-        'rate': `Jack can advise on portfolio restructuring strategies given interest rate changes.`,
+        'conference': `Jack can advise on portfolio scaling and joint venture strategies for growth.`,
+        'economic': `Jack can help you position your portfolio given changing market conditions.`,
         'default': `Jack specialises in Joint Ventures and capital-efficient portfolio scaling.`
       },
       'Fontaine Brothers': {
         'holiday': `Use this holiday to systemise your portfolio with Fontaine Brothers R2R expertise.`,
         'default': `Fontaine Brothers offer R2R systemization and corporate contract strategies.`
+      },
+      'Harvey Growth': {
+        'auction': `Harvey can help you source and analyse auction opportunities remotely using AI tools.`,
+        'default': `Harvey specialises in Remote Tech, AI Sourcing and Remote BRR strategies.`
+      },
+      'John Howard': {
+        'economic': `John can advise on institutional-level investment strategies given market conditions.`,
+        'conference': `John can help you access equity funding and distressed asset opportunities.`,
+        'default': `John specialises in Institutional Development, Equity Funding and Distressed Assets.`
+      },
+      'Honest Property Sisters': {
+        'energy': `The Honest Property Sisters can guide you on sustainable property investment strategies.`,
+        'default': `The Honest Property Sisters offer Sustainability Mentorship and Slow Wealth Strategy.`
+      },
+      'Sean Land': {
+        'auction': `Sean can help you source land opportunities and navigate planning gain strategies.`,
+        'default': `Sean specialises in Land Sourcing, Planning Gain and Direct Negotiation.`
+      },
+      'Emma Fildes': {
+        'auction': `Emma can represent you and negotiate the best deal at auction.`,
+        'property': `Emma can act as your buying agent to secure the right property.`,
+        'default': `Emma specialises in Representation, Buying Agency and Negotiation.`
+      },
+      'Vijay Singh': {
+        'property': `Vijay can help you source turnkey BTL properties in high-yield markets.`,
+        'default': `Vijay specialises in Turnkey Volume BTL and North East Markets.`
+      },
+      'Lewis Dawson': {
+        'holiday': `Use this holiday to optimise your SA strategy with Lewis's hospitality expertise.`,
+        'default': `Lewis specialises in SA and Asset Sweating for maximum Hospitality Yields.`
+      },
+      'James Coupland': {
+        'training': `James can teach you arbitrage sourcing strategies through JPU Academy.`,
+        'default': `James specialises in Arbitrage Sourced Deals through JPU Academy.`
+      },
+      'Dale Anderson': {
+        'property': `Dale can help you with off-plan opportunities and new build due diligence.`,
+        'default': `Dale specialises in Off-Plan Distribution and New Build Due Diligence.`
+      },
+      'Gavin and Mitch Vaughan': {
+        'property': `The Vaughan brothers can help you set up B2B corporate lets and SA management.`,
+        'default': `Gavin and Mitch specialise in Sourcing, B2B Corporate Let and SA Management.`
+      },
+      'Sally Lawson': {
+        'training': `Sally can help you optimise your property business funnels and processes.`,
+        'default': `Sally specialises in Optimization, Agent Rainmaker and Marketing Funnels.`
       }
     };
     const expertTexts = helpTexts[expert.name];

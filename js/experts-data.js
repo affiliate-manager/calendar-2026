@@ -20,23 +20,25 @@ var LYB_EXPERTS=[
 {id:"exp-19",name:"Charlie Lamdin",expertise:"Advocacy, BestAgent Platform, Moving Advice",image:"https://lendlord.io/wp-content/uploads/2025/11/Charlie-Lamdin.jpg",consultUrl:"https://app.lendlord.io/uk-property-investment-consultant?utm_campaign=lendlord_calendar"}
 ];
 
+// Updated Event Types from Landlord Calendar 2026 Google Sheet
 var LYB_CATEGORIES=[
 {id:"all",name:"All Events"},
-{id:"tax",name:"Tax and Deadlines"},
-{id:"rate",name:"Interest Rates"},
-{id:"stats",name:"Market Statistics"},
-{id:"reform",name:"Regulatory Changes"},
-{id:"event",name:"Networking and Shows"},
+{id:"tax-fiscal",name:"Tax & Fiscal"},
+{id:"economic",name:"Economic Indicators"},
+{id:"energy",name:"Energy & Sustainability"},
+{id:"property",name:"Property & Tenancy"},
+{id:"training",name:"Training & Webinars"},
+{id:"conference",name:"Industry Conferences"},
+{id:"auction",name:"Property Auctions"},
 {id:"holiday",name:"Bank Holidays"}
 ];
 
+// Updated Investor Types from Google Sheet
 var LYB_INVESTOR_TYPES=[
 {id:"all",name:"All Investors"},
-{id:"btl",name:"Buy-to-Let"},
-{id:"hmo",name:"HMO Landlords"},
-{id:"ltd",name:"Limited Company"},
-{id:"commercial",name:"Commercial"},
-{id:"developer",name:"Developers"},
+{id:"btl",name:"Single Buy-to-Let Landlord"},
+{id:"brrr",name:"BRRR & Property Developer"},
+{id:"ltd",name:"Limited Company (SPV) Investor"},
+{id:"institutional",name:"Institutional / High-Net-Worth"},
 {id:"agent",name:"Letting Agents"}
 ];
-

@@ -44,13 +44,21 @@
 .lyb-day-number{font-size:14px!important;font-weight:600!important;color:var(--text)!important;margin-bottom:4px!important}
 .lyb-event-dots{display:flex!important;flex-wrap:wrap!important;gap:3px!important;margin-top:4px!important}
 .lyb-event-dot{width:8px!important;height:8px!important;border-radius:50%!important}
+/* Event Category Colors - Updated */
+.lyb-event-dot.tax-fiscal{background:#ef4444!important}
+.lyb-event-dot.economic{background:#3b82f6!important}
+.lyb-event-dot.energy{background:#10b981!important}
+.lyb-event-dot.property{background:#8b5cf6!important}
+.lyb-event-dot.training{background:#f59e0b!important}
+.lyb-event-dot.conference{background:var(--primary)!important}
+.lyb-event-dot.auction{background:#ec4899!important}
+.lyb-event-dot.holiday{background:#6b7280!important}
+/* Legacy category support */
 .lyb-event-dot.tax{background:#ef4444!important}
 .lyb-event-dot.rate{background:#3b82f6!important}
 .lyb-event-dot.stats{background:#8b5cf6!important}
 .lyb-event-dot.reform{background:#10b981!important}
 .lyb-event-dot.event{background:var(--primary)!important}
-.lyb-event-dot.holiday{background:#6b7280!important}
-.lyb-event-dot.auction{background:#f59e0b!important}
 .lyb-sidebar{width:200px!important;display:flex!important;flex-direction:column!important;gap:12px!important}
 .lyb-sidebar-btn{width:100%!important;justify-content:center!important;padding:14px 20px!important}
 .lyb-event-card{background:var(--bg)!important;border-radius:var(--radius)!important;box-shadow:var(--shadow)!important;overflow:hidden!important}
