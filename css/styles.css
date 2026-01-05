@@ -138,11 +138,11 @@
 
 @media(max-width:1024px){
   .lyb-main-content{flex-direction:column!important;align-items:stretch!important}
-  .lyb-sidebar-right{width:100%!important;order:2!important;flex-direction:row!important;flex-wrap:wrap!important;padding-top:0!important;gap:16px!important}
-  .lyb-sidebar-actions{flex-direction:row!important;flex:1!important;min-width:280px!important}
-  .lyb-sidebar-btn{flex:1!important}
-  .lyb-expert-sidebar{flex:2!important;min-width:280px!important}
-  .lyb-expert-panel{height:180px!important}
+  .lyb-sidebar-right{width:100%!important;order:2!important;flex-direction:row!important;flex-wrap:wrap!important;padding-top:0!important;gap:16px!important;align-items:flex-start!important}
+  .lyb-sidebar-actions{flex-direction:column!important;width:220px!important;flex-shrink:0!important}
+  .lyb-sidebar-btn{width:100%!important}
+  .lyb-expert-sidebar{flex:1!important;min-width:280px!important}
+  .lyb-expert-card{height:auto!important}
   .lyb-calendar-container{order:1!important}
   .lyb-card-content{grid-template-columns:1fr!important}
   .lyb-card-section{border-right:none!important;border-bottom:1px solid var(--border)!important}
