@@ -358,12 +358,22 @@ class LandlordYearbook {
           </div>
         </div>`;
       expertSidebar.innerHTML = `
-        <div class="lyb-expert-panel lyb-expert-section" style="background-image:url('${expert.image}')">
-          <div class="lyb-expert-content">
-            <p class="lyb-expert-name">${expert.name}</p>
-            <p class="lyb-expert-text">${expert.expertise}</p>
-            <a href="${expert.consultUrl}" target="_blank" class="lyb-expert-btn">Schedule a Meeting</a>
+        <div class="lyb-expert-card">
+          <div class="lyb-expert-header">
+            <img src="${expert.image}" alt="${expert.name}" class="lyb-expert-avatar">
+            <div class="lyb-expert-info">
+              <p class="lyb-expert-name">${expert.name}</p>
+              <p class="lyb-expert-title">${expert.expertise.split(',')[0]}</p>
+            </div>
           </div>
+          <p class="lyb-expert-desc">${expert.expertise}</p>
+          <a href="${expert.consultUrl}" target="_blank" class="lyb-btn lyb-btn-expert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <path d="M16 2v4M8 2v4M3 10h18"/>
+            </svg>
+            Schedule a Meeting
+          </a>
         </div>`;
       return;
     }
@@ -420,12 +430,22 @@ class LandlordYearbook {
 
     // Render the expert section in the sidebar (right of calendar)
     expertSidebar.innerHTML = `
-      <div class="lyb-expert-panel lyb-expert-section" style="background-image:url('${expert.image}')">
-        <div class="lyb-expert-content">
-          <p class="lyb-expert-name">${expert.name}</p>
-          <p class="lyb-expert-text">${this.getExpertHelpText(expert, event)}</p>
-          <a href="${expert.consultUrl}" target="_blank" class="lyb-expert-btn">Schedule a Meeting</a>
+      <div class="lyb-expert-card">
+        <div class="lyb-expert-header">
+          <img src="${expert.image}" alt="${expert.name}" class="lyb-expert-avatar">
+          <div class="lyb-expert-info">
+            <p class="lyb-expert-name">${expert.name}</p>
+            <p class="lyb-expert-title">${expert.expertise.split(',')[0]}</p>
+          </div>
         </div>
+        <p class="lyb-expert-desc">${this.getExpertHelpText(expert, event)}</p>
+        <a href="${expert.consultUrl}" target="_blank" class="lyb-btn lyb-btn-expert">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <path d="M16 2v4M8 2v4M3 10h18"/>
+          </svg>
+          Schedule a Meeting
+        </a>
       </div>`;
 
     this.attachCardEventListeners(event);
