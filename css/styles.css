@@ -28,8 +28,13 @@
 .lyb-search:focus{outline:none!important;border-color:var(--primary)!important;box-shadow:0 0 0 3px rgba(238,149,35,.15)!important}
 .lyb-select{padding:10px 14px!important;font-size:14px!important;border:1px solid var(--border)!important;border-radius:12px!important;background:var(--bg)!important;min-width:160px!important;cursor:pointer!important;color:var(--text)!important}
 .lyb-cta-text{text-align:center!important;font-size:16px!important;color:var(--text-secondary)!important;margin:16px 0!important}
-.lyb-main-content{display:flex!important;gap:20px!important;margin-bottom:24px!important}
-.lyb-calendar-container{flex:1!important;min-width:0!important}
+.lyb-main-content{display:flex!important;gap:20px!important;margin-bottom:24px!important;align-items:stretch!important}
+.lyb-calendar-container{flex:1!important;min-width:0!important;display:flex!important;flex-direction:column!important}
+.lyb-calendar-grid{flex:1!important}
+.lyb-calendar-actions{display:flex!important;gap:12px!important;margin-top:16px!important;justify-content:center!important}
+.lyb-action-btn{padding:12px 24px!important}
+.lyb-expert-sidebar{width:280px!important;flex-shrink:0!important;display:flex!important}
+.lyb-expert-panel{width:100%!important;border-radius:var(--radius)!important;overflow:hidden!important;box-shadow:var(--shadow)!important}
 .lyb-calendar-grid{background:var(--bg)!important;border-radius:var(--radius)!important;box-shadow:var(--shadow)!important;overflow:hidden!important}
 .lyb-calendar-header{display:grid!important;grid-template-columns:repeat(7,1fr)!important;background:var(--bg-secondary)!important;border-bottom:1px solid var(--border)!important}
 .lyb-day-name{padding:16px 8px!important;text-align:center!important;font-size:12px!important;font-weight:600!important;color:var(--text-secondary)!important;text-transform:uppercase!important;letter-spacing:.5px!important}
@@ -59,10 +64,8 @@
 .lyb-event-dot.stats{background:#8b5cf6!important}
 .lyb-event-dot.reform{background:#10b981!important}
 .lyb-event-dot.event{background:var(--primary)!important}
-.lyb-sidebar{width:200px!important;display:flex!important;flex-direction:column!important;gap:12px!important}
-.lyb-sidebar-btn{width:100%!important;justify-content:center!important;padding:14px 20px!important}
 .lyb-event-card{background:var(--bg)!important;border-radius:var(--radius)!important;box-shadow:var(--shadow)!important;overflow:hidden!important}
-.lyb-card-content{display:grid!important;grid-template-columns:19% 27% 27% 27%!important;min-height:300px!important}
+.lyb-card-content{display:grid!important;grid-template-columns:repeat(3,1fr)!important;min-height:280px!important}
 .lyb-card-section{padding:20px!important;border-right:1px solid var(--border)!important}
 .lyb-card-section:last-child{border-right:none!important}
 .lyb-card-date{font-size:20px!important;font-weight:700!important;color:var(--primary)!important;margin-bottom:16px!important}
@@ -118,12 +121,20 @@
 .lyb-reset-btn{margin-left:auto!important}
 
 /* Responsive Design */
+@media(max-width:1200px){
+  .lyb-expert-sidebar{width:240px!important}
+  .lyb-expert-panel{min-height:350px!important}
+}
+
 @media(max-width:1024px){
   .lyb-main-content{flex-direction:column!important}
-  .lyb-sidebar{width:100%!important;flex-direction:row!important;justify-content:center!important}
+  .lyb-expert-sidebar{width:100%!important;order:2!important}
+  .lyb-expert-panel{min-height:200px!important;height:auto!important}
+  .lyb-calendar-container{order:1!important}
   .lyb-card-content{grid-template-columns:1fr!important}
   .lyb-card-section{border-right:none!important;border-bottom:1px solid var(--border)!important}
   .lyb-card-section:last-child{border-bottom:none!important}
+  .lyb-calendar-actions{flex-wrap:wrap!important}
 }
 
 @media(max-width:768px){
