@@ -31,9 +31,12 @@
 .lyb-main-content{display:flex!important;gap:20px!important;margin-bottom:24px!important;align-items:stretch!important}
 .lyb-calendar-container{flex:1!important;min-width:0!important;display:flex!important;flex-direction:column!important}
 .lyb-calendar-grid{flex:1!important}
-.lyb-calendar-actions{display:flex!important;gap:12px!important;margin-top:16px!important;justify-content:center!important}
-.lyb-action-btn{padding:12px 24px!important}
-.lyb-expert-sidebar{width:280px!important;flex-shrink:0!important;display:flex!important}
+.lyb-sidebar-right{width:220px!important;flex-shrink:0!important;display:flex!important;flex-direction:column!important;gap:12px!important}
+.lyb-sidebar-actions{display:flex!important;flex-direction:column!important;gap:10px!important}
+.lyb-sidebar-btn{width:100%!important;justify-content:center!important;padding:12px 16px!important;font-size:13px!important;gap:8px!important;border-radius:24px!important}
+.lyb-share-btn{background:#fff!important;color:var(--text)!important;border:1px solid var(--border)!important}
+.lyb-share-btn:hover{background:var(--bg-secondary)!important}
+.lyb-expert-sidebar{flex:1!important;display:flex!important}
 .lyb-expert-panel{width:100%!important;border-radius:var(--radius)!important;overflow:hidden!important;box-shadow:var(--shadow)!important}
 .lyb-calendar-grid{background:var(--bg)!important;border-radius:var(--radius)!important;box-shadow:var(--shadow)!important;overflow:hidden!important}
 .lyb-calendar-header{display:grid!important;grid-template-columns:repeat(7,1fr)!important;background:var(--bg-secondary)!important;border-bottom:1px solid var(--border)!important}
@@ -122,19 +125,20 @@
 
 /* Responsive Design */
 @media(max-width:1200px){
-  .lyb-expert-sidebar{width:240px!important}
-  .lyb-expert-panel{min-height:350px!important}
+  .lyb-sidebar-right{width:200px!important}
 }
 
 @media(max-width:1024px){
   .lyb-main-content{flex-direction:column!important}
-  .lyb-expert-sidebar{width:100%!important;order:2!important}
+  .lyb-sidebar-right{width:100%!important;order:2!important;flex-direction:row!important;flex-wrap:wrap!important}
+  .lyb-sidebar-actions{flex-direction:row!important;flex:1!important;min-width:300px!important}
+  .lyb-sidebar-btn{flex:1!important}
+  .lyb-expert-sidebar{flex:2!important;min-width:300px!important}
   .lyb-expert-panel{min-height:200px!important;height:auto!important}
   .lyb-calendar-container{order:1!important}
   .lyb-card-content{grid-template-columns:1fr!important}
   .lyb-card-section{border-right:none!important;border-bottom:1px solid var(--border)!important}
   .lyb-card-section:last-child{border-bottom:none!important}
-  .lyb-calendar-actions{flex-wrap:wrap!important}
 }
 
 @media(max-width:768px){
