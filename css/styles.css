@@ -7,6 +7,8 @@
 .lyb-calendar-widget{--primary:#EE9523;--primary-dark:#d4831d;--primary-light:#fef3e2;--text:#1d1d1f;--text-secondary:#86868b;--bg:#fff;--bg-secondary:#f5f5f7;--border:#d2d2d7;--shadow:0 4px 24px rgba(0,0,0,.08);--radius:16px;max-width:1400px!important;margin:0 auto!important;padding:24px!important;background:var(--bg)!important}
 .lyb-header{display:flex!important;align-items:center!important;justify-content:space-between!important;padding:16px 24px!important;background:var(--bg)!important;border-radius:var(--radius)!important;box-shadow:var(--shadow)!important;margin-bottom:24px!important;flex-wrap:wrap!important;gap:16px!important}
 .lyb-header-left{display:flex!important;align-items:center!important;gap:16px!important}
+.lyb-logo-link{display:flex!important;align-items:center!important;text-decoration:none!important;transition:opacity .2s!important}
+.lyb-logo-link:hover{opacity:0.8!important}
 .lyb-logo{height:44px!important;width:auto!important}
 .lyb-title{font-size:28px!important;font-weight:700!important;color:var(--text)!important}
 .lyb-btn{display:inline-flex!important;align-items:center!important;gap:8px!important;padding:10px 20px!important;font-size:14px!important;font-weight:600!important;border-radius:12px!important;cursor:pointer!important;transition:all .2s!important;border:none!important;text-decoration:none!important}
