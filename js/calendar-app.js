@@ -825,6 +825,143 @@ class LandlordYearbook {
   }
 }
 
+// ============================================
+// Market Overview - Live Rates Module
+// ============================================
+class MarketOverview {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    this.loadLiveRates();
+    this.attachEventListeners();
+    // Refresh rates every 5 minutes
+    setInterval(() => this.loadLiveRates(), 5 * 60 * 1000);
+  }
+
+  async loadLiveRates() {
+    try {
+      const response = await fetch('js/live-rates.json?' + Date.now());
+      if (!response.ok) throw new Error('Failed to load rates');
+      const data = await response.json();
+      this.displayRates(data);
+    } catch (error) {
+      console.warn('Could not load live rates:', error);
+      this.displayFallbackRates();
+    }
+  }
+
+  displayRates(data) {
+    const baseRateEl = document.getElementById('lyb-base-rate');
+    const rateChangeEl = document.getElementById('lyb-rate-change');
+    const rateUpdatedEl = document.getElementById('lyb-rate-updated');
+    const insightEl = document.getElementById('lyb-market-insight');
+    const nextMpcEl = document.getElementById('lyb-next-mpc');
+    const countdownEl = document.getElementById('lyb-countdown-days');
+    const sentimentMarkerEl = document.getElementById('lyb-sentiment-marker');
+    const sentimentTextEl = document.getElementById('lyb-sentiment-text');
+
+    if (baseRateEl) baseRateEl.textContent = data.base_rate || '—';
+
+    if (rateChangeEl && data.change) {
+      rateChangeEl.textContent = data.change.formatted !== '0.00' ? 
+        (data.change.direction === 'up' ? '↑ ' : '↓ ') + data.change.formatted + '%' : 'unchanged';
+      rateChangeEl.className = 'lyb-market-change ' + (data.change.direction || 'hold');
+    }
+
+    if (rateUpdatedEl) {
+      const updateDate = new Date(data.last_updated || data.observation_date);
+      rateUpdatedEl.textContent = 'Updated: ' + updateDate.toLocaleDateString('en-GB');
+    }
+
+    if (insightEl && data.market_insight) {
+      insightEl.textContent = data.market_insight;
+    }
+
+    if (nextMpcEl && data.next_mpc_date) {
+      const mpcDate = new Date(data.next_mpc_date);
+      nextMpcEl.textContent = mpcDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    if (countdownEl && data.next_mpc_date) {
+      const today = new Date();
+      const mpcDate = new Date(data.next_mpc_date);
+      const diffDays = Math.ceil((mpcDate - today) / (1000 * 60 * 60 * 24));
+      countdownEl.textContent = diffDays > 0 ? diffDays : 0;
+    }
+
+    this.updateSentimentGauge(data, sentimentMarkerEl, sentimentTextEl);
+  }
+
+  displayFallbackRates() {
+    const baseRateEl = document.getElementById('lyb-base-rate');
+    const rateUpdatedEl = document.getElementById('lyb-rate-updated');
+    const countdownEl = document.getElementById('lyb-countdown-days');
+
+    if (baseRateEl) baseRateEl.textContent = '—';
+    if (rateUpdatedEl) rateUpdatedEl.textContent = 'Unable to load live data';
+    if (countdownEl) countdownEl.textContent = '—';
+  }
+
+  updateSentimentGauge(data, markerEl, textEl) {
+    let position = 50;
+    let message = 'Markets expect rates to hold steady';
+
+    if (data.change) {
+      if (data.change.direction === 'down') {
+        position = 25;
+        message = 'Recent cut suggests further easing may follow';
+      } else if (data.change.direction === 'up') {
+        position = 75;
+        message = 'Recent rise suggests tightening cycle continues';
+      } else {
+        const rate = parseFloat(data.base_rate);
+        if (rate >= 5) {
+          position = 35;
+          message = 'At elevated levels, markets expect gradual cuts';
+        } else if (rate <= 3) {
+          position = 60;
+          message = 'At low levels, rates likely to hold or rise slowly';
+        }
+      }
+    }
+
+    if (markerEl) markerEl.style.left = position + '%';
+    if (textEl) textEl.textContent = message;
+  }
+
+  attachEventListeners() {
+    const notifyBtn = document.getElementById('lyb-notify-mpc');
+    if (notifyBtn) {
+      notifyBtn.addEventListener('click', () => this.addMpcToCalendar());
+    }
+  }
+
+  addMpcToCalendar() {
+    const nextMpcEl = document.getElementById('lyb-next-mpc');
+    if (!nextMpcEl) return;
+
+    const mpcDateText = nextMpcEl.textContent;
+    const mpcDate = new Date(mpcDateText);
+    mpcDate.setHours(12, 0, 0);
+    const endDate = new Date(mpcDate);
+    endDate.setHours(13, 0, 0);
+
+    const formatGoogleDate = (date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: 'Bank of England MPC Rate Decision',
+      details: 'The Monetary Policy Committee announces its interest rate decision. Check lendlord.io/calendar-2026 for updates.',
+      location: 'Bank of England, London',
+      dates: `${formatGoogleDate(mpcDate)}/${formatGoogleDate(endDate)}`
+    });
+
+    window.open(`https://calendar.google.com/calendar/render?${params.toString()}`, '_blank');
+  }
+}
+
 // Initialize when DOM is ready
 (function() {
   var initialized = false;
@@ -836,6 +973,7 @@ class LandlordYearbook {
       widget.setAttribute('data-initialized', 'true');
       try {
         new LandlordYearbook();
+        new MarketOverview();
         console.log('Landlord Yearbook initialized successfully');
       } catch(e) {
         console.error('Landlord Yearbook error:', e);

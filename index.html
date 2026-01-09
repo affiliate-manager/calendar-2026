@@ -21,6 +21,110 @@
     <div class="lyb-controls" id="lyb-controls"></div>
     <div id="lyb-main"></div>
     <div class="lyb-event-card" id="lyb-event-card"></div>
+    
+    <!-- Market Overview Box -->
+    <div class="lyb-market-overview" id="lyb-market-overview">
+      <div class="lyb-market-header">
+        <div class="lyb-market-title-group">
+          <svg class="lyb-market-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>
+          </svg>
+          <h3 class="lyb-market-title">Market Overview</h3>
+        </div>
+        <span class="lyb-market-live-badge"><span class="lyb-pulse"></span>LIVE</span>
+      </div>
+      <div class="lyb-market-grid">
+        <div class="lyb-market-card lyb-market-primary">
+          <div class="lyb-market-card-header">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="10" width="18" height="11" rx="1"/><path d="M7 10V7a5 5 0 0110 0v3"/><path d="M12 3v2"/><circle cx="12" cy="15" r="2"/>
+            </svg>
+            <span class="lyb-market-source">Bank of England</span>
+          </div>
+          <div class="lyb-market-card-body">
+            <span class="lyb-market-label">Official Bank Rate</span>
+            <div class="lyb-market-value-row">
+              <span class="lyb-market-value" id="lyb-base-rate">—</span>
+              <span class="lyb-market-unit">%</span>
+              <span class="lyb-market-change" id="lyb-rate-change"></span>
+            </div>
+            <span class="lyb-market-sublabel">Base rate set by MPC</span>
+          </div>
+          <div class="lyb-market-card-footer">
+            <span class="lyb-market-updated" id="lyb-rate-updated">Loading...</span>
+          </div>
+        </div>
+        <div class="lyb-market-card lyb-market-info">
+          <div class="lyb-market-card-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <span class="lyb-market-source">What This Means</span>
+          </div>
+          <div class="lyb-market-card-body">
+            <p class="lyb-market-insight" id="lyb-market-insight">The base rate directly influences mortgage rates. Tracker mortgages adjust immediately, while fixed rates reflect market expectations.</p>
+          </div>
+          <div class="lyb-market-card-footer">
+            <a href="https://www.bankofengland.co.uk/monetary-policy" target="_blank" class="lyb-market-link">
+              Learn about MPC decisions
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="lyb-market-card lyb-market-calendar">
+          <div class="lyb-market-card-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <span class="lyb-market-source">Next Rate Decision</span>
+          </div>
+          <div class="lyb-market-card-body">
+            <span class="lyb-market-label">Next MPC Meeting</span>
+            <div class="lyb-market-date-display" id="lyb-next-mpc">6 Feb 2026</div>
+            <div class="lyb-market-countdown">
+              <span class="lyb-countdown-number" id="lyb-countdown-days">—</span>
+              <span class="lyb-countdown-label">days away</span>
+            </div>
+          </div>
+          <div class="lyb-market-card-footer">
+            <button class="lyb-market-notify-btn" id="lyb-notify-mpc">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/>
+              </svg>
+              Remind me
+            </button>
+          </div>
+        </div>
+        <div class="lyb-market-card lyb-market-sentiment">
+          <div class="lyb-market-card-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+            </svg>
+            <span class="lyb-market-source">Market Sentiment</span>
+          </div>
+          <div class="lyb-market-card-body">
+            <div class="lyb-sentiment-gauge">
+              <div class="lyb-sentiment-bar">
+                <div class="lyb-sentiment-marker" id="lyb-sentiment-marker" style="left:50%"></div>
+              </div>
+              <div class="lyb-sentiment-labels"><span>Rate Cut</span><span>Hold</span><span>Rate Rise</span></div>
+            </div>
+            <p class="lyb-sentiment-text" id="lyb-sentiment-text">Markets expect rates to hold steady</p>
+          </div>
+        </div>
+      </div>
+      <div class="lyb-market-footer">
+        <p class="lyb-market-disclaimer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Data sourced from Bank of England IUSD. Updated after each MPC decision.
+        </p>
+      </div>
+    </div>
+    
     <div class="lyb-modal" id="lyb-search-modal"></div>
   </div>
 
