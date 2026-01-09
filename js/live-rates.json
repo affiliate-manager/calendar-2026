@@ -1,14 +1,15 @@
 {
-  "base_rate": "4.75",
-  "observation_date": "2026-01-09",
+  "base_rate": "3.75",
+  "observation_date": "2025-12-18",
   "last_updated": "2026-01-09 14:00:00",
   "change": {
-    "direction": "hold",
-    "value": 0,
-    "formatted": "0.00"
+    "direction": "down",
+    "value": 0.25,
+    "formatted": "-0.25"
   },
+  "previous_rate": "4.00",
   "next_mpc_date": "2026-02-06",
-  "market_insight": "The Bank Rate is currently 4.75%. Markets are pricing in gradual rate cuts through 2026. Consider locking in fixed rates while competitive deals remain available.",
+  "market_insight": "The Bank Rate was cut to 3.75% in December 2025, down from 4%. This signals continued easing by the MPC. Tracker mortgage holders will see lower payments, while fixed rate deals remain competitive.",
   "source": "Bank of England IUSD",
   "series_code": "IUMABEDR"
 }
