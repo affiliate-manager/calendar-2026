@@ -1,15 +1,14 @@
 {
-  "base_rate": "4.50",
+  "base_rate": "4.75",
   "observation_date": "2026-01-09",
-  "last_updated": "2026-01-09 12:00:00",
+  "last_updated": "2026-01-09 14:00:00",
   "change": {
     "direction": "hold",
     "value": 0,
     "formatted": "0.00"
   },
   "next_mpc_date": "2026-02-06",
-  "market_insight": "Rates held at 4.50%. Markets expect gradual easing in 2026. Consider your refinancing strategy as fixed deals may offer competitive rates.",
+  "market_insight": "The Bank Rate is currently 4.75%. Markets are pricing in gradual rate cuts through 2026. Consider locking in fixed rates while competitive deals remain available.",
   "source": "Bank of England IUSD",
   "series_code": "IUMABEDR"
 }
-
