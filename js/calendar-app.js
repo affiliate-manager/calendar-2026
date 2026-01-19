@@ -700,8 +700,9 @@ class LandlordYearbook {
     const daysInMonth = lastDay.getDate();
     const today = new Date();
 
-    // Get events for this month
-    const eventsThisMonth = this.events.filter(e => {
+    // Get events for this month (safeguard against undefined)
+    const events = this.events || [];
+    const eventsThisMonth = events.filter(e => {
       const eDate = new Date(e.date);
       return eDate.getMonth() === month && eDate.getFullYear() === year;
     });
