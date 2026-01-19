@@ -700,8 +700,8 @@ class LandlordYearbook {
     const daysInMonth = lastDay.getDate();
     const today = new Date();
 
-    // Get events for this month (safeguard against undefined)
-    const events = this.events || [];
+    // Get events for this month from global LYB_EVENTS
+    const events = typeof LYB_EVENTS !== 'undefined' ? LYB_EVENTS : [];
     
     // Create a map of day -> events for that day
     const eventsByDay = {};
