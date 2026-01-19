@@ -148,9 +148,9 @@
 .lyb-mini-day.today{background:var(--primary-light)!important}
 .lyb-mini-day.selected{background:var(--primary)!important}
 .lyb-mini-day.selected .lyb-mini-day-num{color:#fff!important}
-.lyb-mini-day-num{font-size:11px!important;font-weight:600!important;color:var(--text)!important;margin-bottom:2px!important}
-.lyb-mini-day-dots{display:flex!important;flex-wrap:wrap!important;gap:2px!important}
-.lyb-mini-dot{width:5px!important;height:5px!important;border-radius:50%!important}
+.lyb-mini-day-num{font-size:11px!important;font-weight:600!important;color:var(--text)!important}
+.lyb-mini-day-dots{display:flex!important;flex-wrap:wrap!important;gap:2px!important;margin-top:2px!important}
+.lyb-mini-dot{width:6px!important;height:6px!important;border-radius:50%!important;flex-shrink:0!important}
 .lyb-mini-dot.tax-fiscal{background:#ef4444!important}
 .lyb-mini-dot.economic{background:#3b82f6!important}
 .lyb-mini-dot.energy{background:#10b981!important}
