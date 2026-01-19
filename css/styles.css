@@ -110,45 +110,51 @@
 .lyb-cta-button{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:100%!important;padding:12px 16px!important;font-size:13px!important;font-weight:600!important;background:var(--primary)!important;color:#fff!important;border:none!important;border-radius:8px!important;cursor:pointer!important;text-align:center!important;text-decoration:none!important;transition:all .2s!important;margin-top:auto!important}
 .lyb-cta-button:hover{background:var(--primary-dark)!important}
 .lyb-cta-hint{font-size:10px!important;color:var(--text-secondary)!important;margin-top:12px!important;text-align:center!important;opacity:.7!important}
-/* Grid Overlay - shows when hovering section 3 */
+/* Grid Overlay - Split View with Image + Mini Calendar */
 .lyb-calendar-grid{position:relative!important}
-.lyb-grid-overlay{position:absolute!important;inset:0!important;background:#fff!important;border-radius:var(--radius)!important;opacity:0!important;visibility:hidden!important;transition:all .4s cubic-bezier(.4,0,.2,1)!important;z-index:50!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+.lyb-grid-overlay{position:absolute!important;inset:0!important;background:#fff!important;border-radius:var(--radius)!important;opacity:0!important;visibility:hidden!important;transition:all .4s cubic-bezier(.4,0,.2,1)!important;z-index:50!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;box-shadow:var(--shadow)!important}
 .lyb-grid-overlay.active{opacity:1!important;visibility:visible!important}
+.lyb-calendar-grid.overlay-active .lyb-calendar-header,.lyb-calendar-grid.overlay-active .lyb-calendar-body{opacity:.1!important;pointer-events:none!important}
+/* Split Top Section: Image Left + Mini Calendar Right */
 .lyb-overlay-split{display:flex!important;flex:1!important;min-height:0!important}
-.lyb-overlay-left{position:relative!important;width:50%!important;background:#f5f5f7!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important}
-.lyb-overlay-right{width:50%!important;background:#fff!important;padding:16px!important;display:flex!important;align-items:center!important;justify-content:center!important;border-left:1px solid var(--border)!important}
+.lyb-overlay-left{position:relative!important;width:50%!important;background:#f5f5f7!important;overflow:hidden!important}
+.lyb-overlay-img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center top!important}
 .lyb-back-to-calendar{position:absolute!important;top:0!important;left:0!important;width:130px!important;height:130px!important;background:var(--primary)!important;color:#fff!important;border:none!important;border-radius:0 0 100% 0!important;font-size:10px!important;font-weight:700!important;cursor:pointer!important;transition:all .25s cubic-bezier(.4,0,.2,1)!important;z-index:60!important;box-shadow:4px 4px 16px rgba(238,149,35,.4)!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;padding:10px 8px!important;text-align:left!important;line-height:1.2!important}
 .lyb-back-to-calendar:hover{background:var(--primary-dark)!important;box-shadow:6px 6px 24px rgba(238,149,35,.5)!important}
-.lyb-back-to-calendar svg{stroke:#fff!important;flex-shrink:0!important;margin-bottom:2px!important}
-.lyb-back-to-calendar span{max-width:70px!important}
+.lyb-back-to-calendar svg{stroke:#fff!important;flex-shrink:0!important;margin-bottom:2px!important;width:16px!important;height:16px!important}
+.lyb-back-to-calendar span{max-width:75px!important}
 .lyb-back-dots{display:flex!important;gap:4px!important;margin-bottom:6px!important}
-.lyb-back-dot{width:8px!important;height:8px!important;border-radius:50%!important;opacity:.4!important;animation:dotBlink 2s infinite!important}
+.lyb-back-dot{width:7px!important;height:7px!important;border-radius:50%!important;opacity:.4!important;animation:dotBlink 2s infinite!important}
 .lyb-dot-1{background:#ee9523!important;animation-delay:0s!important}
 .lyb-dot-2{background:#e74c3c!important;animation-delay:.5s!important}
 .lyb-dot-3{background:#3498db!important;animation-delay:1s!important}
 .lyb-dot-4{background:#9b59b6!important;animation-delay:1.5s!important}
 @keyframes dotBlink{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
-.lyb-calendar-grid.overlay-active .lyb-calendar-header,.lyb-calendar-grid.overlay-active .lyb-calendar-body{opacity:.1!important;pointer-events:none!important}
-.lyb-overlay-img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center top!important}
-.lyb-overlay-cta-section{padding:16px 24px!important;display:flex!important;align-items:center!important;gap:20px!important;background:#fff!important;border-top:1px solid var(--border)!important;color:var(--text)!important}
+/* Mini Calendar Right Side */
+.lyb-overlay-right{width:50%!important;background:#fff!important;padding:12px!important;display:flex!important;align-items:center!important;justify-content:center!important;border-left:1px solid var(--border)!important}
+.lyb-mini-calendar{width:100%!important;max-width:320px!important;background:#fff!important;border-radius:12px!important;overflow:hidden!important}
+.lyb-mini-header{background:var(--primary)!important;color:#fff!important;padding:10px 14px!important;display:flex!important;align-items:center!important;justify-content:space-between!important}
+.lyb-mini-title{font-size:14px!important;font-weight:700!important}
+.lyb-mini-nav{display:flex!important;gap:8px!important}
+.lyb-mini-nav-btn{background:rgba(255,255,255,.2)!important;border:none!important;color:#fff!important;width:24px!important;height:24px!important;border-radius:50%!important;cursor:pointer!important;font-size:12px!important;display:flex!important;align-items:center!important;justify-content:center!important;transition:background .2s!important}
+.lyb-mini-nav-btn:hover{background:rgba(255,255,255,.35)!important}
+.lyb-mini-grid{display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:1px!important;padding:8px!important;background:#fff!important}
+.lyb-mini-day-name{font-size:9px!important;font-weight:600!important;color:var(--text-secondary)!important;text-align:center!important;padding:4px 0!important;text-transform:uppercase!important}
+.lyb-mini-day{font-size:11px!important;text-align:center!important;padding:6px 2px!important;border-radius:6px!important;cursor:pointer!important;color:var(--text)!important;transition:all .15s!important;position:relative!important}
+.lyb-mini-day:hover{background:var(--primary-light)!important}
+.lyb-mini-day.other-month{color:#ccc!important}
+.lyb-mini-day.today{background:var(--primary)!important;color:#fff!important;font-weight:700!important}
+.lyb-mini-day.selected{background:var(--primary-light)!important;color:var(--primary)!important;font-weight:600!important}
+.lyb-mini-day.has-event::after{content:''!important;position:absolute!important;bottom:2px!important;left:50%!important;transform:translateX(-50%)!important;width:4px!important;height:4px!important;background:var(--primary)!important;border-radius:50%!important}
+.lyb-mini-day.today.has-event::after{background:#fff!important}
+/* CTA Section at Bottom */
+.lyb-overlay-cta-section{padding:14px 20px!important;display:flex!important;align-items:center!important;gap:16px!important;background:#fff!important;border-top:1px solid var(--border)!important;color:var(--text)!important}
 .lyb-overlay-badge{display:none!important}
-.lyb-overlay-title{font-size:16px!important;font-weight:700!important;line-height:1.3!important;color:var(--text)!important;flex-shrink:0!important;max-width:200px!important}
+.lyb-overlay-title{font-size:15px!important;font-weight:700!important;line-height:1.3!important;color:var(--text)!important;flex-shrink:0!important;max-width:180px!important}
 .lyb-overlay-desc{font-size:12px!important;line-height:1.5!important;color:var(--text-secondary)!important;flex:1!important}
 .lyb-overlay-cta{display:inline-flex!important;align-items:center!important;gap:8px!important;padding:12px 20px!important;font-size:13px!important;font-weight:600!important;background:var(--primary)!important;color:#fff!important;border-radius:10px!important;text-decoration:none!important;transition:all .2s!important;flex-shrink:0!important;white-space:nowrap!important}
 .lyb-overlay-cta:hover{background:var(--primary-dark)!important;transform:translateY(-2px)!important;box-shadow:0 8px 24px rgba(238,149,35,.4)!important}
-/* Mini Calendar in Overlay */
-.lyb-mini-calendar{width:100%!important;max-width:280px!important;background:#fff!important;border-radius:12px!important;box-shadow:0 4px 20px rgba(0,0,0,.08)!important;overflow:hidden!important}
-.lyb-mini-header{background:var(--primary)!important;color:#fff!important;padding:12px 16px!important;text-align:center!important}
-.lyb-mini-title{font-size:14px!important;font-weight:700!important}
-.lyb-mini-grid{display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:2px!important;padding:8px!important}
-.lyb-mini-day-name{font-size:9px!important;font-weight:600!important;color:var(--text-secondary)!important;text-align:center!important;padding:4px 0!important;text-transform:uppercase!important}
-.lyb-mini-day{font-size:11px!important;text-align:center!important;padding:6px 4px!important;border-radius:6px!important;cursor:default!important;color:var(--text)!important}
-.lyb-mini-day.other-month{color:#ccc!important}
-.lyb-mini-day.today{background:var(--primary)!important;color:#fff!important;font-weight:700!important}
-.lyb-mini-day.has-event{position:relative!important}
-.lyb-mini-day.has-event::after{content:''!important;position:absolute!important;bottom:2px!important;left:50%!important;transform:translateX(-50%)!important;width:4px!important;height:4px!important;background:var(--primary)!important;border-radius:50%!important}
-.lyb-mini-day.today.has-event::after{background:#fff!important}
-@media(max-width:900px){.lyb-overlay-split{flex-direction:column!important}.lyb-overlay-left{width:100%!important;height:50%!important}.lyb-overlay-right{width:100%!important;height:50%!important;border-left:none!important;border-top:1px solid var(--border)!important}.lyb-overlay-cta-section{flex-direction:column!important;padding:12px!important;gap:10px!important;text-align:center!important}.lyb-overlay-title{max-width:100%!important;font-size:14px!important}.lyb-overlay-desc{font-size:11px!important}.lyb-overlay-cta{width:100%!important;justify-content:center!important}.lyb-back-to-calendar{width:100px!important;height:100px!important;font-size:8px!important;padding:8px 6px!important}.lyb-back-to-calendar span{max-width:55px!important}.lyb-mini-calendar{max-width:220px!important}}
+@media(max-width:900px){.lyb-overlay-split{flex-direction:column!important}.lyb-overlay-left{width:100%!important;height:45%!important}.lyb-overlay-right{width:100%!important;height:55%!important;border-left:none!important;border-top:1px solid var(--border)!important}.lyb-back-to-calendar{width:100px!important;height:100px!important;font-size:8px!important;padding:8px 6px!important}.lyb-back-to-calendar span{max-width:55px!important}.lyb-mini-calendar{max-width:280px!important}.lyb-overlay-cta-section{flex-direction:column!important;padding:12px!important;gap:10px!important;text-align:center!important}.lyb-overlay-title{max-width:100%!important;font-size:14px!important}.lyb-overlay-cta{width:100%!important;justify-content:center!important}}
 .lyb-expert-section{background-size:cover!important;background-position:center top!important;position:relative!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important}
 .lyb-expert-section::before{content:''!important;position:absolute!important;inset:0!important;background:linear-gradient(to top,rgba(0,0,0,.85),transparent 70%)!important}
 .lyb-expert-content{position:relative!important;z-index:1!important;color:#fff!important}
@@ -226,16 +232,8 @@
   .lyb-cta-button{padding:6px 10px!important;font-size:10px!important}
   .lyb-back-to-calendar{width:60px!important;height:60px!important;font-size:8px!important;padding:4px!important}
   .lyb-back-to-calendar svg{width:12px!important;height:12px!important}
-  .lyb-overlay-cta-section{padding:10px!important;gap:8px!important}
+  .lyb-overlay-info{padding:10px!important;gap:8px!important}
   .lyb-overlay-title{font-size:12px!important;max-width:none!important}
-  .lyb-overlay-split{flex-direction:column!important}
-  .lyb-overlay-left{width:100%!important;height:45%!important}
-  .lyb-overlay-right{width:100%!important;height:35%!important;border-left:none!important;border-top:1px solid var(--border)!important;padding:10px!important}
-  .lyb-mini-calendar{max-width:200px!important}
-  .lyb-mini-header{padding:8px 12px!important}
-  .lyb-mini-title{font-size:12px!important}
-  .lyb-mini-day{font-size:10px!important;padding:4px 2px!important}
-  .lyb-mini-day-name{font-size:8px!important}
   .lyb-overlay-desc{font-size:10px!important;-webkit-line-clamp:2!important}
   .lyb-overlay-cta{padding:8px 12px!important;font-size:10px!important}
   .lyb-event-card{margin-bottom:0!important}
@@ -272,15 +270,9 @@
   .lyb-back-to-calendar{width:50px!important;height:50px!important;font-size:7px!important;padding:3px!important}
   .lyb-blinking-dots{display:none!important}
   .lyb-back-to-calendar svg{width:10px!important;height:10px!important}
-  .lyb-overlay-left{height:40%!important}
-  .lyb-overlay-right{height:35%!important;padding:6px!important}
-  .lyb-overlay-cta-section{padding:6px!important;gap:4px!important;flex-direction:column!important}
+  .lyb-overlay-img{height:45%!important}
+  .lyb-overlay-info{height:55%!important;padding:6px!important;gap:4px!important}
   .lyb-overlay-title{font-size:10px!important}
-  .lyb-mini-calendar{max-width:160px!important}
-  .lyb-mini-header{padding:6px 8px!important}
-  .lyb-mini-title{font-size:10px!important}
-  .lyb-mini-day{font-size:8px!important;padding:3px 1px!important}
-  .lyb-mini-day-name{font-size:7px!important}
   .lyb-overlay-desc{font-size:9px!important;-webkit-line-clamp:2!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;overflow:hidden!important}
   .lyb-overlay-cta{padding:6px 10px!important;font-size:9px!important;width:100%!important;justify-content:center!important}
   .lyb-events-list{max-height:50px!important}

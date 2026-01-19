@@ -120,12 +120,7 @@ class LandlordYearbook {
                   <img src="" alt="" class="lyb-overlay-img" id="lyb-overlay-img">
                 </div>
                 <div class="lyb-overlay-right">
-                  <div class="lyb-mini-calendar" id="lyb-mini-calendar">
-                    <div class="lyb-mini-header">
-                      <span class="lyb-mini-title" id="lyb-mini-title">January 2026</span>
-                    </div>
-                    <div class="lyb-mini-grid" id="lyb-mini-grid"></div>
-                  </div>
+                  <div class="lyb-mini-calendar" id="lyb-mini-calendar"></div>
                 </div>
               </div>
               <div class="lyb-overlay-cta-section">
@@ -557,76 +552,17 @@ class LandlordYearbook {
     overlayCta.href = event.ctaUrl || 'https://app.lendlord.io/signup';
     overlayCtaText.textContent = event.ctaBtn || 'Get Started Free';
 
+    // Render mini calendar in overlay
+    this.renderMiniCalendar();
+
     // Track if mouse is over sections or grid
     let isOverSection = false;
     let isOverGrid = false;
     let lastMouseX = 0;
     let lastMouseY = 0;
 
-    // Store reference to this for use in nested functions
-    const self = this;
-
-    // Populate mini calendar
-    const populateMiniCalendar = () => {
-      const miniGrid = document.getElementById('lyb-mini-grid');
-      const miniTitle = document.getElementById('lyb-mini-title');
-      if (!miniGrid || !miniTitle) return;
-
-      const year = self.currentYear || new Date().getFullYear();
-      const month = self.currentMonth !== undefined ? self.currentMonth : new Date().getMonth();
-      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
-                          'July', 'August', 'September', 'October', 'November', 'December'];
-      
-      miniTitle.textContent = `${monthNames[month]} ${year}`;
-      
-      // Get events for current month
-      const events = self.events || [];
-      const monthEvents = events.filter(e => {
-        const eventDate = new Date(e.date);
-        return eventDate.getMonth() === month && eventDate.getFullYear() === year;
-      }).map(e => new Date(e.date).getDate());
-      
-      // Build mini calendar HTML
-      let html = '';
-      const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-      dayNames.forEach(d => {
-        html += `<div class="lyb-mini-day-name">${d}</div>`;
-      });
-      
-      const firstDay = new Date(year, month, 1).getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const daysInPrevMonth = new Date(year, month, 0).getDate();
-      const startDay = firstDay === 0 ? 6 : firstDay - 1;
-      
-      // Previous month days
-      for (let i = startDay - 1; i >= 0; i--) {
-        html += `<div class="lyb-mini-day other-month">${daysInPrevMonth - i}</div>`;
-      }
-      
-      // Current month days
-      const today = new Date();
-      for (let day = 1; day <= daysInMonth; day++) {
-        const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
-        const hasEvent = monthEvents.includes(day);
-        let classes = 'lyb-mini-day';
-        if (isToday) classes += ' today';
-        if (hasEvent) classes += ' has-event';
-        html += `<div class="${classes}">${day}</div>`;
-      }
-      
-      // Next month days
-      const totalCells = startDay + daysInMonth;
-      const remaining = totalCells > 35 ? 42 - totalCells : 35 - totalCells;
-      for (let i = 1; i <= remaining; i++) {
-        html += `<div class="lyb-mini-day other-month">${i}</div>`;
-      }
-      
-      miniGrid.innerHTML = html;
-    };
-
     // Show overlay function
     const showOverlay = () => {
-      populateMiniCalendar();
       gridOverlay.classList.add('active');
       calendarGrid.classList.add('overlay-active');
     };
@@ -745,6 +681,106 @@ class LandlordYearbook {
       'holiday': 'Use this break to review your portfolio performance'
     };
     return titles[event.category] || 'Keep all your property documents organised in one dashboard';
+  }
+
+  renderMiniCalendar() {
+    const container = document.getElementById('lyb-mini-calendar');
+    if (!container) return;
+
+    const year = this.currentDate.getFullYear();
+    const month = this.currentDate.getMonth();
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                        'July', 'August', 'September', 'October', 'November', 'December'];
+    const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+    // Get days for this month
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startDay = (firstDay.getDay() + 6) % 7; // Monday = 0
+    const daysInMonth = lastDay.getDate();
+    const today = new Date();
+
+    // Get events for this month
+    const eventsThisMonth = this.events.filter(e => {
+      const eDate = new Date(e.date);
+      return eDate.getMonth() === month && eDate.getFullYear() === year;
+    });
+    const eventDays = new Set(eventsThisMonth.map(e => new Date(e.date).getDate()));
+
+    let daysHtml = '';
+    
+    // Day names
+    dayNames.forEach(d => {
+      daysHtml += `<div class="lyb-mini-day-name">${d}</div>`;
+    });
+
+    // Empty cells before first day
+    for (let i = 0; i < startDay; i++) {
+      const prevMonth = new Date(year, month, 0);
+      const day = prevMonth.getDate() - startDay + i + 1;
+      daysHtml += `<div class="lyb-mini-day other-month">${day}</div>`;
+    }
+
+    // Days of month
+    for (let d = 1; d <= daysInMonth; d++) {
+      const isToday = today.getDate() === d && today.getMonth() === month && today.getFullYear() === year;
+      const isSelected = this.selectedDate && this.selectedDate.getDate() === d && 
+                         this.selectedDate.getMonth() === month && this.selectedDate.getFullYear() === year;
+      const hasEvent = eventDays.has(d);
+      
+      let classes = 'lyb-mini-day';
+      if (isToday) classes += ' today';
+      if (isSelected) classes += ' selected';
+      if (hasEvent) classes += ' has-event';
+      
+      daysHtml += `<div class="${classes}" data-day="${d}">${d}</div>`;
+    }
+
+    // Empty cells after last day
+    const totalCells = startDay + daysInMonth;
+    const remainingCells = (7 - (totalCells % 7)) % 7;
+    for (let i = 1; i <= remainingCells; i++) {
+      daysHtml += `<div class="lyb-mini-day other-month">${i}</div>`;
+    }
+
+    container.innerHTML = `
+      <div class="lyb-mini-header">
+        <span class="lyb-mini-title">${monthNames[month]} ${year}</span>
+        <div class="lyb-mini-nav">
+          <button class="lyb-mini-nav-btn" id="lyb-mini-prev">←</button>
+          <button class="lyb-mini-nav-btn" id="lyb-mini-next">→</button>
+        </div>
+      </div>
+      <div class="lyb-mini-grid">${daysHtml}</div>
+    `;
+
+    // Add event listeners for mini calendar navigation
+    document.getElementById('lyb-mini-prev')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+      this.renderCalendar();
+      this.renderMiniCalendar();
+    });
+
+    document.getElementById('lyb-mini-next')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+      this.renderCalendar();
+      this.renderMiniCalendar();
+    });
+
+    // Add click handlers for mini calendar days
+    container.querySelectorAll('.lyb-mini-day:not(.other-month)').forEach(dayEl => {
+      dayEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const day = parseInt(dayEl.dataset.day);
+        const clickedDate = new Date(year, month, day);
+        this.selectDate(clickedDate);
+        // Update main calendar to reflect selection
+        this.renderCalendar();
+        this.renderMiniCalendar();
+      });
+    });
   }
 
   showCalendarDropdown(event, btn) {
