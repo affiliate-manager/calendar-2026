@@ -691,7 +691,7 @@ class LandlordYearbook {
     const month = this.currentDate.getMonth();
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
                         'July', 'August', 'September', 'October', 'November', 'December'];
-    const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    const dayNames = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
     // Get days for this month
     const firstDay = new Date(year, month, 1);
@@ -702,46 +702,65 @@ class LandlordYearbook {
 
     // Get events for this month (safeguard against undefined)
     const events = this.events || [];
-    const eventsThisMonth = events.filter(e => {
+    
+    // Create a map of day -> events for that day
+    const eventsByDay = {};
+    events.forEach(e => {
       const eDate = new Date(e.date);
-      return eDate.getMonth() === month && eDate.getFullYear() === year;
+      if (eDate.getMonth() === month && eDate.getFullYear() === year) {
+        const day = eDate.getDate();
+        if (!eventsByDay[day]) eventsByDay[day] = [];
+        eventsByDay[day].push(e);
+      }
     });
-    const eventDays = new Set(eventsThisMonth.map(e => new Date(e.date).getDate()));
+
+    // Day names header
+    let dayNamesHtml = '';
+    dayNames.forEach(d => {
+      dayNamesHtml += `<div class="lyb-mini-day-name">${d}</div>`;
+    });
 
     let daysHtml = '';
-    
-    // Day names
-    dayNames.forEach(d => {
-      daysHtml += `<div class="lyb-mini-day-name">${d}</div>`;
-    });
 
-    // Empty cells before first day
+    // Empty cells before first day (previous month)
+    const prevMonth = new Date(year, month, 0);
     for (let i = 0; i < startDay; i++) {
-      const prevMonth = new Date(year, month, 0);
       const day = prevMonth.getDate() - startDay + i + 1;
-      daysHtml += `<div class="lyb-mini-day other-month">${day}</div>`;
+      daysHtml += `<div class="lyb-mini-day other-month"><span class="lyb-mini-day-num">${day}</span></div>`;
     }
 
-    // Days of month
+    // Days of month with event dots
     for (let d = 1; d <= daysInMonth; d++) {
       const isToday = today.getDate() === d && today.getMonth() === month && today.getFullYear() === year;
       const isSelected = this.selectedDate && this.selectedDate.getDate() === d && 
                          this.selectedDate.getMonth() === month && this.selectedDate.getFullYear() === year;
-      const hasEvent = eventDays.has(d);
+      const dayEvents = eventsByDay[d] || [];
       
       let classes = 'lyb-mini-day';
       if (isToday) classes += ' today';
       if (isSelected) classes += ' selected';
-      if (hasEvent) classes += ' has-event';
       
-      daysHtml += `<div class="${classes}" data-day="${d}">${d}</div>`;
+      // Generate event dots (max 4 for space)
+      let dotsHtml = '';
+      if (dayEvents.length > 0) {
+        dotsHtml = '<div class="lyb-mini-day-dots">';
+        dayEvents.slice(0, 4).forEach(evt => {
+          dotsHtml += `<span class="lyb-mini-dot ${evt.category}"></span>`;
+        });
+        dotsHtml += '</div>';
+      }
+      
+      daysHtml += `<div class="${classes}" data-day="${d}">
+        <span class="lyb-mini-day-num">${d}</span>
+        ${dotsHtml}
+      </div>`;
     }
 
-    // Empty cells after last day
+    // Empty cells after last day (next month)
     const totalCells = startDay + daysInMonth;
     const remainingCells = (7 - (totalCells % 7)) % 7;
     for (let i = 1; i <= remainingCells; i++) {
-      daysHtml += `<div class="lyb-mini-day other-month">${i}</div>`;
+      daysHtml += `<div class="lyb-mini-day other-month"><span class="lyb-mini-day-num">${i}</span></div>`;
     }
 
     container.innerHTML = `
@@ -752,6 +771,7 @@ class LandlordYearbook {
           <button class="lyb-mini-nav-btn" id="lyb-mini-next">→</button>
         </div>
       </div>
+      <div class="lyb-mini-day-names">${dayNamesHtml}</div>
       <div class="lyb-mini-grid">${daysHtml}</div>
     `;
 
