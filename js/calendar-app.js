@@ -530,21 +530,32 @@ class LandlordYearbook {
     overlayCta.href = event.ctaUrl || 'https://app.lendlord.io/signup';
     overlayCtaText.textContent = event.ctaBtn || 'Get Started Free';
 
-    // Remove old event listeners by cloning the element
-    const newCtaSection = ctaSection.cloneNode(true);
-    ctaSection.parentNode.replaceChild(newCtaSection, ctaSection);
-
-    // Hover on section 3 → show overlay
-    newCtaSection.addEventListener('mouseenter', () => {
+    // Store handlers to allow removal
+    const showOverlay = () => {
       gridOverlay.classList.add('active');
       calendarGrid.classList.add('overlay-active');
-    });
-
-    // Mouse leaves section 3 → hide overlay
-    newCtaSection.addEventListener('mouseleave', () => {
+    };
+    
+    const hideOverlay = () => {
       gridOverlay.classList.remove('active');
       calendarGrid.classList.remove('overlay-active');
-    });
+    };
+
+    // Remove previous listeners if stored
+    if (this._ctaEnterHandler) {
+      ctaSection.removeEventListener('mouseenter', this._ctaEnterHandler);
+    }
+    if (this._ctaLeaveHandler) {
+      ctaSection.removeEventListener('mouseleave', this._ctaLeaveHandler);
+    }
+
+    // Store new handlers
+    this._ctaEnterHandler = showOverlay;
+    this._ctaLeaveHandler = hideOverlay;
+
+    // Add new listeners
+    ctaSection.addEventListener('mouseenter', showOverlay);
+    ctaSection.addEventListener('mouseleave', hideOverlay);
   }
 
   getOverlayTitle(event) {
