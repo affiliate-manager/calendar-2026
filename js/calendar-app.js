@@ -541,6 +541,12 @@ class LandlordYearbook {
     overlayCta.href = event.ctaUrl || 'https://app.lendlord.io/signup';
     overlayCtaText.textContent = event.ctaBtn || 'Get Started Free';
 
+    // Track if mouse is over sections or grid
+    let isOverSection = false;
+    let isOverGrid = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+
     // Show overlay function
     const showOverlay = () => {
       gridOverlay.classList.add('active');
@@ -553,28 +559,95 @@ class LandlordYearbook {
       calendarGrid.classList.remove('overlay-active');
     };
 
-    // Remove previous listeners from all sections
+    // Check if mouse is moving toward the grid
+    const isMovingTowardGrid = (e) => {
+      const gridRect = calendarGrid.getBoundingClientRect();
+      const gridCenterX = gridRect.left + gridRect.width / 2;
+      const gridCenterY = gridRect.top + gridRect.height / 2;
+      
+      const movingTowardX = (e.clientX > lastMouseX && e.clientX < gridCenterX) || 
+                            (e.clientX < lastMouseX && e.clientX > gridCenterX);
+      const movingTowardY = (e.clientY > lastMouseY && e.clientY < gridCenterY) || 
+                            (e.clientY < lastMouseY && e.clientY > gridCenterY);
+      
+      // Check if mouse is between section and grid (horizontally moving left toward grid)
+      const isHeadingToGrid = e.clientX < lastMouseX && e.clientX > gridRect.left;
+      
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+      
+      return isHeadingToGrid || (movingTowardX && movingTowardY);
+    };
+
+    // Section mouse enter
+    const handleSectionEnter = () => {
+      isOverSection = true;
+      showOverlay();
+    };
+
+    // Section mouse leave - check direction
+    const handleSectionLeave = (e) => {
+      isOverSection = false;
+      
+      // Small delay to check if entering grid
+      setTimeout(() => {
+        if (!isOverSection && !isOverGrid) {
+          hideOverlay();
+        }
+      }, 100);
+    };
+
+    // Grid mouse enter - keep overlay visible
+    const handleGridEnter = () => {
+      isOverGrid = true;
+    };
+
+    // Grid mouse leave
+    const handleGridLeave = () => {
+      isOverGrid = false;
+      if (!isOverSection) {
+        hideOverlay();
+      }
+    };
+
+    // Remove previous listeners
     allSections.forEach((section, index) => {
-      if (this._sectionHandlers && this._sectionHandlers[index]) {
-        section.removeEventListener('mouseenter', this._sectionHandlers[index]);
+      if (this._sectionEnterHandlers && this._sectionEnterHandlers[index]) {
+        section.removeEventListener('mouseenter', this._sectionEnterHandlers[index]);
+      }
+      if (this._sectionLeaveHandlers && this._sectionLeaveHandlers[index]) {
+        section.removeEventListener('mouseleave', this._sectionLeaveHandlers[index]);
       }
     });
 
-    // Remove previous back button listener
+    if (this._gridEnterHandler) {
+      gridOverlay.removeEventListener('mouseenter', this._gridEnterHandler);
+    }
+    if (this._gridLeaveHandler) {
+      gridOverlay.removeEventListener('mouseleave', this._gridLeaveHandler);
+    }
     if (this._backBtnHandler) {
       backToCalendarBtn.removeEventListener('click', this._backBtnHandler);
     }
 
     // Store new handlers
-    this._sectionHandlers = [];
+    this._sectionEnterHandlers = [];
+    this._sectionLeaveHandlers = [];
+    this._gridEnterHandler = handleGridEnter;
+    this._gridLeaveHandler = handleGridLeave;
     this._backBtnHandler = hideOverlay;
 
     // Add hover listeners to ALL sections (1, 2, and 3)
     allSections.forEach((section, index) => {
-      const handler = showOverlay;
-      this._sectionHandlers[index] = handler;
-      section.addEventListener('mouseenter', handler);
+      this._sectionEnterHandlers[index] = handleSectionEnter;
+      this._sectionLeaveHandlers[index] = handleSectionLeave;
+      section.addEventListener('mouseenter', handleSectionEnter);
+      section.addEventListener('mouseleave', handleSectionLeave);
     });
+
+    // Grid overlay listeners
+    gridOverlay.addEventListener('mouseenter', handleGridEnter);
+    gridOverlay.addEventListener('mouseleave', handleGridLeave);
 
     // Back to Calendar button hides the overlay
     backToCalendarBtn.addEventListener('click', hideOverlay);
