@@ -542,8 +542,8 @@ class LandlordYearbook {
       calendarGrid.classList.add('overlay-active');
     });
 
-    // Mouse leaves calendar grid → hide overlay
-    calendarGrid.addEventListener('mouseleave', () => {
+    // Mouse leaves section 3 → hide overlay
+    ctaSection.addEventListener('mouseleave', () => {
       gridOverlay.classList.remove('active');
       calendarGrid.classList.remove('overlay-active');
     });
