@@ -114,9 +114,9 @@
 .lyb-calendar-grid{position:relative!important}
 .lyb-grid-overlay{position:absolute!important;inset:0!important;background:linear-gradient(135deg,#1a1f2e 0%,#0d111a 100%)!important;border-radius:var(--radius)!important;opacity:0!important;visibility:hidden!important;transition:all .4s cubic-bezier(.4,0,.2,1)!important;z-index:50!important;display:flex!important;overflow:hidden!important}
 .lyb-grid-overlay.active{opacity:1!important;visibility:visible!important}
-.lyb-back-to-calendar{position:absolute!important;top:16px!important;left:16px!important;display:flex!important;align-items:center!important;gap:8px!important;padding:10px 16px!important;background:rgba(255,255,255,.95)!important;color:var(--text)!important;border:none!important;border-radius:8px!important;font-size:13px!important;font-weight:600!important;cursor:pointer!important;transition:all .2s!important;z-index:60!important;box-shadow:0 2px 8px rgba(0,0,0,.15)!important}
-.lyb-back-to-calendar:hover{background:#fff!important;transform:translateY(-1px)!important;box-shadow:0 4px 12px rgba(0,0,0,.2)!important}
-.lyb-back-to-calendar svg{stroke:var(--text)!important}
+.lyb-back-to-calendar{position:absolute!important;top:16px!important;left:16px!important;display:flex!important;align-items:center!important;gap:10px!important;padding:14px 24px!important;background:var(--primary)!important;color:#fff!important;border:none!important;border-radius:12px!important;font-size:14px!important;font-weight:700!important;cursor:pointer!important;transition:all .25s cubic-bezier(.4,0,.2,1)!important;z-index:60!important;box-shadow:0 4px 16px rgba(238,149,35,.4)!important;letter-spacing:.3px!important}
+.lyb-back-to-calendar:hover{background:var(--primary-dark)!important;transform:translateY(-2px) scale(1.02)!important;box-shadow:0 8px 24px rgba(238,149,35,.5)!important}
+.lyb-back-to-calendar svg{stroke:#fff!important;flex-shrink:0!important}
 .lyb-calendar-grid.overlay-active .lyb-calendar-header,.lyb-calendar-grid.overlay-active .lyb-calendar-body{opacity:.1!important;pointer-events:none!important}
 .lyb-overlay-content{display:flex!important;flex-direction:column!important;width:100%!important;height:100%!important}
 .lyb-overlay-img{width:100%!important;height:70%!important;object-fit:cover!important;object-position:center top!important}
