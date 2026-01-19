@@ -100,33 +100,43 @@ class LandlordYearbook {
             <div class="lyb-calendar-header" id="lyb-day-names"></div>
             <div class="lyb-calendar-body" id="lyb-calendar-body"></div>
             <div class="lyb-grid-overlay" id="lyb-grid-overlay">
-              <button class="lyb-back-to-calendar" id="lyb-back-to-calendar">
-                <div class="lyb-back-dots">
-                  <span class="lyb-back-dot lyb-dot-1"></span>
-                  <span class="lyb-back-dot lyb-dot-2"></span>
-                  <span class="lyb-back-dot lyb-dot-3"></span>
-                  <span class="lyb-back-dot lyb-dot-4"></span>
-                </div>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                  <line x1="16" y1="2" x2="16" y2="6"/>
-                  <line x1="8" y1="2" x2="8" y2="6"/>
-                  <line x1="3" y1="10" x2="21" y2="10"/>
-                </svg>
-                Back to Calendar
-              </button>
-              <div class="lyb-overlay-content">
-                <img src="" alt="" class="lyb-overlay-img" id="lyb-overlay-img">
-                <div class="lyb-overlay-info">
-                  <h3 class="lyb-overlay-title" id="lyb-overlay-title"></h3>
-                  <p class="lyb-overlay-desc" id="lyb-overlay-desc"></p>
-                  <a href="" target="_blank" class="lyb-overlay-cta" id="lyb-overlay-cta">
-                    <span id="lyb-overlay-cta-text"></span>
+              <div class="lyb-overlay-split">
+                <div class="lyb-overlay-left">
+                  <button class="lyb-back-to-calendar" id="lyb-back-to-calendar">
+                    <div class="lyb-back-dots">
+                      <span class="lyb-back-dot lyb-dot-1"></span>
+                      <span class="lyb-back-dot lyb-dot-2"></span>
+                      <span class="lyb-back-dot lyb-dot-3"></span>
+                      <span class="lyb-back-dot lyb-dot-4"></span>
+                    </div>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                      <line x1="3" y1="10" x2="21" y2="10"/>
                     </svg>
-                  </a>
+                    <span>Back to Calendar Only View</span>
+                  </button>
+                  <img src="" alt="" class="lyb-overlay-img" id="lyb-overlay-img">
                 </div>
+                <div class="lyb-overlay-right">
+                  <div class="lyb-mini-calendar" id="lyb-mini-calendar">
+                    <div class="lyb-mini-header">
+                      <span class="lyb-mini-title" id="lyb-mini-title">January 2026</span>
+                    </div>
+                    <div class="lyb-mini-grid" id="lyb-mini-grid"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="lyb-overlay-cta-section">
+                <h3 class="lyb-overlay-title" id="lyb-overlay-title"></h3>
+                <p class="lyb-overlay-desc" id="lyb-overlay-desc"></p>
+                <a href="" target="_blank" class="lyb-overlay-cta" id="lyb-overlay-cta">
+                  <span id="lyb-overlay-cta-text"></span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </a>
               </div>
             </div>
           </div>
@@ -553,8 +563,66 @@ class LandlordYearbook {
     let lastMouseX = 0;
     let lastMouseY = 0;
 
+    // Populate mini calendar
+    const populateMiniCalendar = () => {
+      const miniGrid = document.getElementById('lyb-mini-grid');
+      const miniTitle = document.getElementById('lyb-mini-title');
+      if (!miniGrid || !miniTitle) return;
+
+      const year = this.currentYear;
+      const month = this.currentMonth;
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+      
+      miniTitle.textContent = `${monthNames[month]} ${year}`;
+      
+      // Get events for current month
+      const monthEvents = this.events.filter(e => {
+        const eventDate = new Date(e.date);
+        return eventDate.getMonth() === month && eventDate.getFullYear() === year;
+      }).map(e => new Date(e.date).getDate());
+      
+      // Build mini calendar HTML
+      let html = '';
+      const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+      dayNames.forEach(d => {
+        html += `<div class="lyb-mini-day-name">${d}</div>`;
+      });
+      
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const daysInPrevMonth = new Date(year, month, 0).getDate();
+      const startDay = firstDay === 0 ? 6 : firstDay - 1;
+      
+      // Previous month days
+      for (let i = startDay - 1; i >= 0; i--) {
+        html += `<div class="lyb-mini-day other-month">${daysInPrevMonth - i}</div>`;
+      }
+      
+      // Current month days
+      const today = new Date();
+      for (let day = 1; day <= daysInMonth; day++) {
+        const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+        const hasEvent = monthEvents.includes(day);
+        let classes = 'lyb-mini-day';
+        if (isToday) classes += ' today';
+        if (hasEvent) classes += ' has-event';
+        html += `<div class="${classes}">${day}</div>`;
+      }
+      
+      // Next month days
+      const totalCells = startDay + daysInMonth;
+      const remaining = totalCells > 35 ? 42 - totalCells : 35 - totalCells;
+      for (let i = 1; i <= remaining; i++) {
+        html += `<div class="lyb-mini-day other-month">${i}</div>`;
+      }
+      
+      miniGrid.innerHTML = html;
+    };
+
     // Show overlay function
     const showOverlay = () => {
+      populateMiniCalendar();
       gridOverlay.classList.add('active');
       calendarGrid.classList.add('overlay-active');
     };
