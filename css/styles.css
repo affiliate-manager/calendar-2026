@@ -115,15 +115,15 @@
 .lyb-grid-overlay{position:absolute!important;inset:0!important;background:linear-gradient(135deg,#1a1f2e 0%,#0d111a 100%)!important;border-radius:var(--radius)!important;opacity:0!important;visibility:hidden!important;transition:all .4s cubic-bezier(.4,0,.2,1)!important;z-index:50!important;display:flex!important;overflow:hidden!important}
 .lyb-grid-overlay.active{opacity:1!important;visibility:visible!important}
 .lyb-calendar-grid.overlay-active .lyb-calendar-header,.lyb-calendar-grid.overlay-active .lyb-calendar-body{opacity:.1!important;pointer-events:none!important}
-.lyb-overlay-content{display:flex!important;width:100%!important;height:100%!important}
-.lyb-overlay-img{width:50%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
-.lyb-overlay-info{width:50%!important;padding:40px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;color:#fff!important}
-.lyb-overlay-badge{font-size:11px!important;font-weight:600!important;text-transform:uppercase!important;letter-spacing:1px!important;color:var(--primary)!important;margin-bottom:16px!important}
-.lyb-overlay-title{font-size:28px!important;font-weight:800!important;line-height:1.2!important;margin-bottom:16px!important;color:#fff!important}
-.lyb-overlay-desc{font-size:15px!important;line-height:1.7!important;color:rgba(255,255,255,.7)!important;margin-bottom:32px!important}
-.lyb-overlay-cta{display:inline-flex!important;align-items:center!important;gap:10px!important;padding:16px 28px!important;font-size:15px!important;font-weight:600!important;background:var(--primary)!important;color:#fff!important;border-radius:10px!important;text-decoration:none!important;transition:all .2s!important;align-self:flex-start!important}
+.lyb-overlay-content{display:flex!important;flex-direction:column!important;width:100%!important;height:100%!important}
+.lyb-overlay-img{width:100%!important;height:70%!important;object-fit:cover!important;object-position:center top!important}
+.lyb-overlay-info{width:100%!important;height:30%!important;padding:24px 32px!important;display:flex!important;align-items:center!important;gap:24px!important;background:linear-gradient(135deg,#1a1f2e 0%,#0d111a 100%)!important;color:#fff!important}
+.lyb-overlay-badge{display:none!important}
+.lyb-overlay-title{font-size:20px!important;font-weight:700!important;line-height:1.3!important;color:#fff!important;flex-shrink:0!important;max-width:200px!important}
+.lyb-overlay-desc{font-size:14px!important;line-height:1.6!important;color:rgba(255,255,255,.7)!important;flex:1!important}
+.lyb-overlay-cta{display:inline-flex!important;align-items:center!important;gap:10px!important;padding:14px 24px!important;font-size:14px!important;font-weight:600!important;background:var(--primary)!important;color:#fff!important;border-radius:10px!important;text-decoration:none!important;transition:all .2s!important;flex-shrink:0!important;white-space:nowrap!important}
 .lyb-overlay-cta:hover{background:var(--primary-dark)!important;transform:translateY(-2px)!important;box-shadow:0 8px 24px rgba(238,149,35,.4)!important}
-@media(max-width:900px){.lyb-overlay-content{flex-direction:column!important}.lyb-overlay-img{width:100%!important;height:40%!important}.lyb-overlay-info{width:100%!important;height:60%!important;padding:24px!important}.lyb-overlay-title{font-size:22px!important}.lyb-overlay-desc{font-size:14px!important;margin-bottom:20px!important}.lyb-overlay-cta{padding:12px 20px!important;font-size:14px!important}}
+@media(max-width:900px){.lyb-overlay-img{height:60%!important}.lyb-overlay-info{height:40%!important;flex-direction:column!important;padding:16px!important;gap:12px!important;text-align:center!important}.lyb-overlay-title{max-width:100%!important;font-size:18px!important}.lyb-overlay-desc{font-size:13px!important}.lyb-overlay-cta{width:100%!important;justify-content:center!important}}
 .lyb-expert-section{background-size:cover!important;background-position:center top!important;position:relative!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important}
 .lyb-expert-section::before{content:''!important;position:absolute!important;inset:0!important;background:linear-gradient(to top,rgba(0,0,0,.85),transparent 70%)!important}
 .lyb-expert-content{position:relative!important;z-index:1!important;color:#fff!important}
