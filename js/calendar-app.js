@@ -563,21 +563,25 @@ class LandlordYearbook {
     let lastMouseX = 0;
     let lastMouseY = 0;
 
+    // Store reference to this for use in nested functions
+    const self = this;
+
     // Populate mini calendar
     const populateMiniCalendar = () => {
       const miniGrid = document.getElementById('lyb-mini-grid');
       const miniTitle = document.getElementById('lyb-mini-title');
       if (!miniGrid || !miniTitle) return;
 
-      const year = this.currentYear;
-      const month = this.currentMonth;
+      const year = self.currentYear || new Date().getFullYear();
+      const month = self.currentMonth !== undefined ? self.currentMonth : new Date().getMonth();
       const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
                           'July', 'August', 'September', 'October', 'November', 'December'];
       
       miniTitle.textContent = `${monthNames[month]} ${year}`;
       
       // Get events for current month
-      const monthEvents = this.events.filter(e => {
+      const events = self.events || [];
+      const monthEvents = events.filter(e => {
         const eventDate = new Date(e.date);
         return eventDate.getMonth() === month && eventDate.getFullYear() === year;
       }).map(e => new Date(e.date).getDate());
