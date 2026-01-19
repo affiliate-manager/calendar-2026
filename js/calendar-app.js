@@ -523,27 +523,25 @@ class LandlordYearbook {
     const overlayCta = document.getElementById('lyb-overlay-cta');
     const overlayCtaText = document.getElementById('lyb-overlay-cta-text');
 
-    // Get data from section 3
-    const ctaImg = ctaSection.dataset.ctaImg;
-    const ctaUrl = ctaSection.dataset.ctaUrl;
-    const ctaBtn = ctaSection.dataset.ctaBtn;
-    const ctaText = ctaSection.dataset.ctaText;
-
-    // Set overlay content
-    overlayImg.src = ctaImg;
+    // Set overlay content dynamically based on CURRENT event
+    overlayImg.src = event.ctaImg || 'https://lendlord.io/wp-content/uploads/2025/12/screenshot-Lendlord-Portfolio-financing-platform-for-landlords-1.png';
     overlayTitle.textContent = this.getOverlayTitle(event);
-    overlayDesc.textContent = ctaText;
-    overlayCta.href = ctaUrl;
-    overlayCtaText.textContent = ctaBtn;
+    overlayDesc.textContent = event.ctaText || '';
+    overlayCta.href = event.ctaUrl || 'https://app.lendlord.io/signup';
+    overlayCtaText.textContent = event.ctaBtn || 'Get Started Free';
+
+    // Remove old event listeners by cloning the element
+    const newCtaSection = ctaSection.cloneNode(true);
+    ctaSection.parentNode.replaceChild(newCtaSection, ctaSection);
 
     // Hover on section 3 → show overlay
-    ctaSection.addEventListener('mouseenter', () => {
+    newCtaSection.addEventListener('mouseenter', () => {
       gridOverlay.classList.add('active');
       calendarGrid.classList.add('overlay-active');
     });
 
     // Mouse leaves section 3 → hide overlay
-    ctaSection.addEventListener('mouseleave', () => {
+    newCtaSection.addEventListener('mouseleave', () => {
       gridOverlay.classList.remove('active');
       calendarGrid.classList.remove('overlay-active');
     });
@@ -551,15 +549,16 @@ class LandlordYearbook {
 
   getOverlayTitle(event) {
     // Dynamic titles that connect the event to Lendlord's features shown in the image
+    // Categories match events-data.js: energy, tax-fiscal, economic, property, training, conference, auction, holiday
     const titles = {
-      'Energy & Sustainability': 'Store & track your EPC, Gas Safety & EICR certificates in one place before the deadline',
-      'Tax & Fiscal': 'Auto-calculate your tax liability with real-time portfolio data',
-      'Economic Indicator': 'See how rate changes impact your portfolio cashflow instantly',
-      'Property & Tenancy': 'Keep all tenancy documents organised and accessible',
-      'Training & Webinar': 'Track your learning progress and property metrics together',
-      'Industry Conference': 'Benchmark your portfolio against market data',
-      'Property Auction': 'Analyse potential deals with built-in calculators',
-      'Bank Holiday': 'Review your portfolio performance during the break'
+      'energy': 'Store & track your EPC, Gas Safety & EICR certificates in one place',
+      'tax-fiscal': 'Auto-calculate your tax liability with real-time portfolio data',
+      'economic': 'See how rate changes impact your portfolio cashflow instantly',
+      'property': 'Keep all tenancy documents organised and accessible',
+      'training': 'Track your learning progress and property metrics together',
+      'conference': 'Network smarter - benchmark your portfolio against market data',
+      'auction': 'Analyse potential auction deals with built-in calculators',
+      'holiday': 'Use this break to review your portfolio performance'
     };
     return titles[event.category] || 'Keep all your property documents organised in one dashboard';
   }
