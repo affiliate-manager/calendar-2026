@@ -100,10 +100,15 @@ class LandlordYearbook {
             <div class="lyb-calendar-header" id="lyb-day-names"></div>
             <div class="lyb-calendar-body" id="lyb-calendar-body"></div>
             <div class="lyb-grid-overlay" id="lyb-grid-overlay">
+              <button class="lyb-back-to-calendar" id="lyb-back-to-calendar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Calendar
+              </button>
               <div class="lyb-overlay-content">
                 <img src="" alt="" class="lyb-overlay-img" id="lyb-overlay-img">
                 <div class="lyb-overlay-info">
-                  <span class="lyb-overlay-badge">Recommended for this event</span>
                   <h3 class="lyb-overlay-title" id="lyb-overlay-title"></h3>
                   <p class="lyb-overlay-desc" id="lyb-overlay-desc"></p>
                   <a href="" target="_blank" class="lyb-overlay-cta" id="lyb-overlay-cta">
@@ -462,7 +467,6 @@ class LandlordYearbook {
           <p class="lyb-cta-text-card">${event.ctaText}</p>
           <a href="${event.ctaUrl}" target="_blank" class="lyb-cta-button">${event.ctaBtn}</a>
         </div>
-        <p class="lyb-cta-hint">Hover to preview on calendar</p>
       </div>`;
 
     // Render the expert section in the sidebar (right of calendar)
@@ -511,11 +515,15 @@ class LandlordYearbook {
   }
 
   setupGridOverlayHover(event) {
-    const ctaSection = document.querySelector('.lyb-cta-section');
     const gridOverlay = document.getElementById('lyb-grid-overlay');
     const calendarGrid = document.querySelector('.lyb-calendar-grid');
+    const backToCalendarBtn = document.getElementById('lyb-back-to-calendar');
     
-    if (!ctaSection || !gridOverlay || !calendarGrid) return;
+    // Get all 3 sections in the event card
+    const eventCard = document.querySelector('.lyb-event-card');
+    const allSections = eventCard ? eventCard.querySelectorAll('.lyb-card-section') : [];
+    
+    if (!gridOverlay || !calendarGrid || !backToCalendarBtn) return;
 
     const overlayImg = document.getElementById('lyb-overlay-img');
     const overlayTitle = document.getElementById('lyb-overlay-title');
@@ -530,32 +538,43 @@ class LandlordYearbook {
     overlayCta.href = event.ctaUrl || 'https://app.lendlord.io/signup';
     overlayCtaText.textContent = event.ctaBtn || 'Get Started Free';
 
-    // Store handlers to allow removal
+    // Show overlay function
     const showOverlay = () => {
       gridOverlay.classList.add('active');
       calendarGrid.classList.add('overlay-active');
     };
     
+    // Hide overlay function
     const hideOverlay = () => {
       gridOverlay.classList.remove('active');
       calendarGrid.classList.remove('overlay-active');
     };
 
-    // Remove previous listeners if stored
-    if (this._ctaEnterHandler) {
-      ctaSection.removeEventListener('mouseenter', this._ctaEnterHandler);
-    }
-    if (this._ctaLeaveHandler) {
-      ctaSection.removeEventListener('mouseleave', this._ctaLeaveHandler);
+    // Remove previous listeners from all sections
+    allSections.forEach((section, index) => {
+      if (this._sectionHandlers && this._sectionHandlers[index]) {
+        section.removeEventListener('mouseenter', this._sectionHandlers[index]);
+      }
+    });
+
+    // Remove previous back button listener
+    if (this._backBtnHandler) {
+      backToCalendarBtn.removeEventListener('click', this._backBtnHandler);
     }
 
     // Store new handlers
-    this._ctaEnterHandler = showOverlay;
-    this._ctaLeaveHandler = hideOverlay;
+    this._sectionHandlers = [];
+    this._backBtnHandler = hideOverlay;
 
-    // Add new listeners
-    ctaSection.addEventListener('mouseenter', showOverlay);
-    ctaSection.addEventListener('mouseleave', hideOverlay);
+    // Add hover listeners to ALL sections (1, 2, and 3)
+    allSections.forEach((section, index) => {
+      const handler = showOverlay;
+      this._sectionHandlers[index] = handler;
+      section.addEventListener('mouseenter', handler);
+    });
+
+    // Back to Calendar button hides the overlay
+    backToCalendarBtn.addEventListener('click', hideOverlay);
   }
 
   getOverlayTitle(event) {
