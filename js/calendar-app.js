@@ -440,10 +440,19 @@ class LandlordYearbook {
           </div>
         </div>
       </div>
-      <div class="lyb-card-section lyb-cta-section" style="background-image:url('${event.ctaImg}')">
+      <div class="lyb-card-section lyb-cta-section">
+        <div class="lyb-cta-header">
+          <img src="${event.ctaImg}" alt="" class="lyb-cta-icon" onerror="this.style.display='none'">
+          <span class="lyb-cta-badge">Recommended</span>
+        </div>
         <div class="lyb-cta-content">
           <p class="lyb-cta-text-card">${event.ctaText}</p>
-          <a href="${event.ctaUrl}" target="_blank" class="lyb-cta-button">${event.ctaBtn}</a>
+          <a href="${event.ctaUrl}" target="_blank" class="lyb-cta-button">
+            ${event.ctaBtn}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
         </div>
       </div>`;
 
