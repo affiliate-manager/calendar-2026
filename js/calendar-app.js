@@ -441,13 +441,17 @@ class LandlordYearbook {
         </div>
       </div>
       <div class="lyb-card-section lyb-cta-section">
-        <div class="lyb-cta-header">
-          <img src="${event.ctaImg}" alt="" class="lyb-cta-icon" onerror="this.style.display='none'">
-          <span class="lyb-cta-badge">Sponsor</span>
-        </div>
+        <div class="lyb-cta-badge">Recommended</div>
         <div class="lyb-cta-content">
           <p class="lyb-cta-text-card">${event.ctaText}</p>
           <a href="${event.ctaUrl}" target="_blank" class="lyb-cta-button">${event.ctaBtn}</a>
+        </div>
+        <div class="lyb-cta-popup">
+          <img src="${event.ctaImg}" alt="" class="lyb-cta-popup-img">
+          <div class="lyb-cta-popup-content">
+            <p class="lyb-cta-popup-text">This tool helps you manage this event efficiently</p>
+            <a href="${event.ctaUrl}" target="_blank" class="lyb-cta-popup-btn">${event.ctaBtn}</a>
+          </div>
         </div>
       </div>`;
 
