@@ -99,6 +99,22 @@ class LandlordYearbook {
           <div class="lyb-calendar-grid">
             <div class="lyb-calendar-header" id="lyb-day-names"></div>
             <div class="lyb-calendar-body" id="lyb-calendar-body"></div>
+            <div class="lyb-grid-overlay" id="lyb-grid-overlay">
+              <div class="lyb-overlay-content">
+                <img src="" alt="" class="lyb-overlay-img" id="lyb-overlay-img">
+                <div class="lyb-overlay-info">
+                  <span class="lyb-overlay-badge">Recommended for this event</span>
+                  <h3 class="lyb-overlay-title" id="lyb-overlay-title"></h3>
+                  <p class="lyb-overlay-desc" id="lyb-overlay-desc"></p>
+                  <a href="" target="_blank" class="lyb-overlay-cta" id="lyb-overlay-cta">
+                    <span id="lyb-overlay-cta-text"></span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="lyb-sidebar-right">
@@ -440,19 +456,13 @@ class LandlordYearbook {
           </div>
         </div>
       </div>
-      <div class="lyb-card-section lyb-cta-section">
-        <div class="lyb-cta-badge">Recommended</div>
+      <div class="lyb-card-section lyb-cta-section" data-cta-img="${event.ctaImg}" data-cta-url="${event.ctaUrl}" data-cta-btn="${event.ctaBtn}" data-cta-text="${event.ctaText}">
+        <div class="lyb-cta-badge">✨ Recommended</div>
         <div class="lyb-cta-content">
           <p class="lyb-cta-text-card">${event.ctaText}</p>
           <a href="${event.ctaUrl}" target="_blank" class="lyb-cta-button">${event.ctaBtn}</a>
         </div>
-        <div class="lyb-cta-popup">
-          <img src="${event.ctaImg}" alt="" class="lyb-cta-popup-img">
-          <div class="lyb-cta-popup-content">
-            <p class="lyb-cta-popup-text">This tool helps you manage this event efficiently</p>
-            <a href="${event.ctaUrl}" target="_blank" class="lyb-cta-popup-btn">${event.ctaBtn}</a>
-          </div>
-        </div>
+        <p class="lyb-cta-hint">Hover to preview on calendar</p>
       </div>`;
 
     // Render the expert section in the sidebar (right of calendar)
@@ -495,6 +505,62 @@ class LandlordYearbook {
     if (shareBtn) {
       shareBtn.addEventListener('click', () => this.shareEventWhatsApp(event));
     }
+
+    // Section 3 hover → Grid overlay
+    this.setupGridOverlayHover(event);
+  }
+
+  setupGridOverlayHover(event) {
+    const ctaSection = document.querySelector('.lyb-cta-section');
+    const gridOverlay = document.getElementById('lyb-grid-overlay');
+    const calendarGrid = document.querySelector('.lyb-calendar-grid');
+    
+    if (!ctaSection || !gridOverlay || !calendarGrid) return;
+
+    const overlayImg = document.getElementById('lyb-overlay-img');
+    const overlayTitle = document.getElementById('lyb-overlay-title');
+    const overlayDesc = document.getElementById('lyb-overlay-desc');
+    const overlayCta = document.getElementById('lyb-overlay-cta');
+    const overlayCtaText = document.getElementById('lyb-overlay-cta-text');
+
+    // Get data from section 3
+    const ctaImg = ctaSection.dataset.ctaImg;
+    const ctaUrl = ctaSection.dataset.ctaUrl;
+    const ctaBtn = ctaSection.dataset.ctaBtn;
+    const ctaText = ctaSection.dataset.ctaText;
+
+    // Set overlay content
+    overlayImg.src = ctaImg;
+    overlayTitle.textContent = this.getOverlayTitle(event);
+    overlayDesc.textContent = ctaText;
+    overlayCta.href = ctaUrl;
+    overlayCtaText.textContent = ctaBtn;
+
+    // Hover on section 3 → show overlay
+    ctaSection.addEventListener('mouseenter', () => {
+      gridOverlay.classList.add('active');
+      calendarGrid.classList.add('overlay-active');
+    });
+
+    // Mouse leaves calendar grid → hide overlay
+    calendarGrid.addEventListener('mouseleave', () => {
+      gridOverlay.classList.remove('active');
+      calendarGrid.classList.remove('overlay-active');
+    });
+  }
+
+  getOverlayTitle(event) {
+    const titles = {
+      'Energy & Sustainability': 'Track Your Energy Certificates Digitally',
+      'Tax & Fiscal': 'Never Miss a Tax Deadline Again',
+      'Economic Indicator': 'Monitor Market Movements in Real-Time',
+      'Property & Tenancy': 'Manage Your Tenancies Effortlessly',
+      'Training & Webinar': 'Level Up Your Property Knowledge',
+      'Industry Conference': 'Network with Industry Leaders',
+      'Property Auction': 'Find Your Next Investment Opportunity',
+      'Bank Holiday': 'Plan Your Portfolio Strategy'
+    };
+    return titles[event.category] || 'Manage This Event with Lendlord';
   }
 
   showCalendarDropdown(event, btn) {
