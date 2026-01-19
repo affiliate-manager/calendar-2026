@@ -550,17 +550,18 @@ class LandlordYearbook {
   }
 
   getOverlayTitle(event) {
+    // Dynamic titles that connect the event to Lendlord's features shown in the image
     const titles = {
-      'Energy & Sustainability': 'Track Your Energy Certificates Digitally',
-      'Tax & Fiscal': 'Never Miss a Tax Deadline Again',
-      'Economic Indicator': 'Monitor Market Movements in Real-Time',
-      'Property & Tenancy': 'Manage Your Tenancies Effortlessly',
-      'Training & Webinar': 'Level Up Your Property Knowledge',
-      'Industry Conference': 'Network with Industry Leaders',
-      'Property Auction': 'Find Your Next Investment Opportunity',
-      'Bank Holiday': 'Plan Your Portfolio Strategy'
+      'Energy & Sustainability': 'Store & track your EPC, Gas Safety & EICR certificates in one place before the deadline',
+      'Tax & Fiscal': 'Auto-calculate your tax liability with real-time portfolio data',
+      'Economic Indicator': 'See how rate changes impact your portfolio cashflow instantly',
+      'Property & Tenancy': 'Keep all tenancy documents organised and accessible',
+      'Training & Webinar': 'Track your learning progress and property metrics together',
+      'Industry Conference': 'Benchmark your portfolio against market data',
+      'Property Auction': 'Analyse potential deals with built-in calculators',
+      'Bank Holiday': 'Review your portfolio performance during the break'
     };
-    return titles[event.category] || 'Manage This Event with Lendlord';
+    return titles[event.category] || 'Keep all your property documents organised in one dashboard';
   }
 
   showCalendarDropdown(event, btn) {
