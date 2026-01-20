@@ -1,0 +1,324 @@
+<!-- 
+    The Landlord Yearbook 2026
+    WordPress/Elementor Ready - Single File Version
+    
+    INSTRUCTIONS FOR WORDPRESS:
+    1. In Elementor, add an HTML widget
+    2. Copy and paste this entire code
+    3. Save and preview
+    
+    Or use the separate files (index.html, styles.css, data.js, app.js) for a cleaner setup
+-->
+
+<style>
+/* The Landlord Yearbook - Embedded Styles */
+.landlord-yearbook{font-family:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1d1d1f;line-height:1.5;box-sizing:border-box;max-width:1400px;margin:0 auto;padding:24px;background:#fff}
+.landlord-yearbook *,.landlord-yearbook *::before,.landlord-yearbook *::after{box-sizing:border-box;margin:0;padding:0}
+.lyb-header{display:flex;justify-content:space-between;align-items:center;padding:16px 0;margin-bottom:24px;border-bottom:1px solid #e8e8ed}
+.lyb-header-left{display:flex;align-items:center;gap:16px}
+.lyb-logo{height:44px;width:auto;object-fit:contain}
+.lyb-title{font-size:28px;font-weight:700;color:#1d1d1f;letter-spacing:-0.5px}
+.lyb-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;font-family:inherit;font-size:14px;font-weight:600;border-radius:12px;cursor:pointer;transition:all 0.2s ease;border:none;text-decoration:none}
+.lyb-btn-outline{background:transparent;color:#1d1d1f;border:1.5px solid #d2d2d7}
+.lyb-btn-outline:hover{border-color:#EE9523;color:#EE9523;background:rgba(238,149,35,0.05)}
+.lyb-btn-ghost{background:transparent;color:#6e6e73;padding:8px 12px}
+.lyb-btn-ghost:hover{color:#EE9523;background:rgba(238,149,35,0.08)}
+.lyb-controls{margin-bottom:16px}
+.lyb-controls-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.lyb-controls-left{display:flex;align-items:center;gap:24px}
+.lyb-controls-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.lyb-view-toggle{display:flex;background:#f5f5f7;border-radius:12px;padding:4px}
+.lyb-toggle-btn{padding:8px 20px;font-family:inherit;font-size:14px;font-weight:500;background:transparent;border:none;border-radius:8px;cursor:pointer;color:#6e6e73;transition:all 0.2s ease}
+.lyb-toggle-btn.active{background:#fff;color:#1d1d1f;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+.lyb-nav-arrows{display:flex;align-items:center;gap:12px}
+.lyb-nav-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:#f5f5f7;border:none;border-radius:50%;cursor:pointer;color:#1d1d1f;transition:all 0.2s ease}
+.lyb-nav-btn:hover{background:#EE9523;color:#fff}
+.lyb-current-period{font-size:18px;font-weight:600;min-width:160px;text-align:center}
+.lyb-search-wrapper{position:relative}
+.lyb-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#86868b;pointer-events:none}
+.lyb-search{width:280px;padding:10px 14px 10px 42px;font-family:inherit;font-size:14px;border:1.5px solid #d2d2d7;border-radius:12px;background:#fff;transition:all 0.2s ease}
+.lyb-search:focus{outline:none;border-color:#EE9523;box-shadow:0 0 0 3px rgba(238,149,35,0.15)}
+.lyb-select{padding:10px 36px 10px 14px;font-family:inherit;font-size:14px;border:1.5px solid #d2d2d7;border-radius:12px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236e6e73' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;appearance:none;cursor:pointer;min-width:160px}
+.lyb-cta-text{text-align:center;font-size:15px;color:#6e6e73;margin-bottom:16px}
+.lyb-main-content{display:flex;gap:20px;margin-bottom:24px}
+.lyb-calendar-container{flex:1;min-width:0}
+.lyb-calendar-header{display:flex;justify-content:flex-end;margin-bottom:12px}
+.lyb-calendar-grid{background:#fff;border:1px solid #e8e8ed;border-radius:16px;overflow:hidden}
+.lyb-calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);background:#f5f5f7;border-bottom:1px solid #e8e8ed}
+.lyb-weekday{padding:14px 8px;text-align:center;font-size:12px;font-weight:600;color:#6e6e73;text-transform:uppercase;letter-spacing:0.5px}
+.lyb-calendar-days{display:grid;grid-template-columns:repeat(7,1fr)}
+.lyb-day{min-height:100px;padding:8px;border-right:1px solid #e8e8ed;border-bottom:1px solid #e8e8ed;cursor:pointer;transition:all 0.2s ease;background:#fff}
+.lyb-day:nth-child(7n){border-right:none}
+.lyb-day:hover{background:#fbfbfd}
+.lyb-day.other-month{background:#f5f5f7;opacity:0.5}
+.lyb-day.today{background:rgba(238,149,35,0.08)}
+.lyb-day.selected{background:rgba(238,149,35,0.15);box-shadow:inset 0 0 0 2px #EE9523}
+.lyb-day-number{font-size:14px;font-weight:600;color:#1d1d1f;margin-bottom:6px}
+.lyb-day.today .lyb-day-number{background:#EE9523;color:#fff;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.lyb-day-events{display:flex;flex-direction:column;gap:3px}
+.lyb-event-dot{display:flex;align-items:center;gap:4px;font-size:11px;color:#6e6e73;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:2px 0}
+.lyb-event-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:#EE9523;flex-shrink:0}
+.lyb-event-dot.tax::before{background:#FF3B30}
+.lyb-event-dot.training::before{background:#007AFF}
+.lyb-event-dot.networking::before{background:#34C759}
+.lyb-event-dot.market::before{background:#5856D6}
+.lyb-event-dot.auction::before{background:#FF9500}
+.lyb-event-dot.policy::before{background:#AF52DE}
+.lyb-event-dot.holiday::before{background:#FF2D55}
+.lyb-more-events{font-size:10px;color:#EE9523;font-weight:600;padding:2px 0}
+.lyb-side-actions{display:flex;flex-direction:column;gap:12px;width:200px;flex-shrink:0}
+.lyb-action-btn{display:flex;align-items:center;gap:10px;padding:14px 16px;font-family:inherit;font-size:13px;font-weight:600;background:#fff;border:1.5px solid #d2d2d7;border-radius:12px;cursor:pointer;color:#1d1d1f;transition:all 0.2s ease;text-align:left}
+.lyb-action-btn:hover{border-color:#EE9523;background:rgba(238,149,35,0.05);color:#EE9523}
+.lyb-action-whatsapp{color:#25D366;border-color:#25D366}
+.lyb-action-whatsapp:hover{background:rgba(37,211,102,0.08);color:#25D366;border-color:#25D366}
+.lyb-search-results{background:#fff;border:1px solid #e8e8ed;border-radius:16px;padding:20px;margin-bottom:24px}
+.lyb-search-results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.lyb-search-results-header h3{font-size:18px;font-weight:600}
+.lyb-results-table{width:100%;border-collapse:collapse;font-size:14px}
+.lyb-results-table th,.lyb-results-table td{padding:12px 16px;text-align:left;border-bottom:1px solid #e8e8ed}
+.lyb-results-table th{font-weight:600;color:#6e6e73;background:#f5f5f7}
+.lyb-results-table tr{cursor:pointer;transition:all 0.2s ease}
+.lyb-results-table tbody tr:hover{background:rgba(238,149,35,0.05)}
+.lyb-event-card{display:grid;grid-template-columns:19% 27% 27% 27%;min-height:280px;border:1px solid #e8e8ed;border-radius:20px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.lyb-card-section{padding:24px;display:flex;flex-direction:column}
+.lyb-card-date{background:#f5f5f7;border-right:1px solid #e8e8ed;align-items:center;justify-content:flex-start;gap:16px}
+.lyb-card-date-display{font-size:15px;font-weight:700;color:#EE9523;text-align:center;padding:12px;background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+.lyb-event-selector{display:flex;flex-direction:column;gap:8px;width:100%;overflow-y:auto;max-height:200px}
+.lyb-event-btn{padding:10px 12px;font-family:inherit;font-size:12px;font-weight:500;background:#fff;border:1px solid #d2d2d7;border-radius:8px;cursor:pointer;transition:all 0.2s ease;text-align:left;color:#1d1d1f;line-height:1.3}
+.lyb-event-btn:hover{border-color:#EE9523;background:rgba(238,149,35,0.05)}
+.lyb-event-btn.active{background:#EE9523;color:#fff;border-color:#EE9523}
+.lyb-card-details{background:#fff;border-right:1px solid #e8e8ed}
+.lyb-event-title{font-size:20px;font-weight:700;color:#1d1d1f;margin-bottom:12px;line-height:1.3}
+.lyb-add-calendar-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;font-family:inherit;font-size:13px;font-weight:600;background:#f5f5f7;border:1px solid #d2d2d7;border-radius:12px;cursor:pointer;color:#1d1d1f;margin-bottom:16px;transition:all 0.2s ease;position:relative}
+.lyb-add-calendar-btn:hover{background:#EE9523;color:#fff;border-color:#EE9523}
+.lyb-calendar-icons{display:flex;gap:6px;margin-left:4px}
+.lyb-calendar-dropdown{position:absolute;top:100%;left:0;margin-top:8px;background:#fff;border:1px solid #d2d2d7;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.12);z-index:100;min-width:220px}
+.lyb-dropdown-item{display:flex;align-items:center;gap:12px;width:100%;padding:12px 16px;font-family:inherit;font-size:14px;background:transparent;border:none;cursor:pointer;color:#1d1d1f;transition:all 0.2s ease}
+.lyb-dropdown-item:hover{background:#f5f5f7}
+.lyb-event-description{font-size:14px;color:#6e6e73;line-height:1.6;margin-bottom:16px;flex:1}
+.lyb-event-meta{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.lyb-event-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#EE9523;text-decoration:none;font-weight:500}
+.lyb-event-link:hover{text-decoration:underline}
+.lyb-event-location{display:flex;align-items:flex-start;gap:6px;font-size:13px;color:#6e6e73}
+.lyb-navigation-links{margin-top:auto;padding-top:12px;border-top:1px solid #e8e8ed}
+.lyb-nav-label{font-size:11px;font-weight:600;color:#86868b;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:8px}
+.lyb-nav-icons{display:flex;gap:12px;align-items:center}
+.lyb-nav-icon{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#f5f5f7;border-radius:8px;transition:all 0.2s ease;border:none;cursor:pointer}
+.lyb-nav-icon:hover{background:#fbfbfd;transform:scale(1.05)}
+.lyb-card-cta{position:relative;background-size:cover;background-position:center;border-right:1px solid #e8e8ed;justify-content:flex-end}
+.lyb-cta-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.4) 50%,rgba(0,0,0,0.2) 100%)}
+.lyb-cta-content{position:relative;z-index:1}
+.lyb-cta-description{font-size:14px;color:#fff;line-height:1.6;margin-bottom:16px;text-shadow:0 1px 2px rgba(0,0,0,0.3)}
+.lyb-cta-button{display:inline-block;padding:12px 24px;font-family:inherit;font-size:14px;font-weight:600;background:#EE9523;color:#fff;border-radius:12px;text-decoration:none;transition:all 0.2s ease;text-align:center}
+.lyb-cta-button:hover{background:#F5A94A;transform:translateY(-2px);box-shadow:0 4px 12px rgba(238,149,35,0.4)}
+.lyb-card-expert{position:relative;background-size:cover;background-position:center top;justify-content:flex-end}
+.lyb-expert-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.5) 50%,rgba(0,0,0,0.1) 100%)}
+.lyb-expert-content{position:relative;z-index:1}
+.lyb-expert-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#EE9523;background:rgba(238,149,35,0.2);padding:4px 10px;border-radius:20px;margin-bottom:8px}
+.lyb-expert-name{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
+.lyb-expert-help{font-size:13px;color:rgba(255,255,255,0.85);line-height:1.5;margin-bottom:16px}
+.lyb-expert-btn{display:inline-block;padding:10px 20px;font-family:inherit;font-size:13px;font-weight:600;background:#fff;color:#1d1d1f;border-radius:12px;text-decoration:none;transition:all 0.2s ease}
+.lyb-expert-btn:hover{background:#EE9523;color:#fff;transform:translateY(-2px)}
+.lyb-no-events{text-align:center;padding:40px;color:#86868b}
+.lyb-no-events svg{margin-bottom:12px;opacity:0.5}
+
+/* Responsive */
+@media (max-width:1024px){
+.landlord-yearbook{padding:16px}
+.lyb-controls-row{flex-direction:column;align-items:stretch}
+.lyb-search{width:100%;max-width:300px}
+.lyb-main-content{flex-direction:column}
+.lyb-side-actions{width:100%;flex-direction:row;justify-content:center}
+.lyb-action-btn{flex:1;max-width:250px;justify-content:center}
+.lyb-event-card{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}
+.lyb-card-date{grid-column:1;grid-row:1;flex-direction:row;padding:16px}
+.lyb-event-selector{flex-direction:row;flex-wrap:wrap;max-height:none}
+.lyb-card-details{grid-column:2;grid-row:1}
+.lyb-card-cta{grid-column:1;grid-row:2;min-height:200px}
+.lyb-card-expert{grid-column:2;grid-row:2;min-height:200px}
+}
+@media (max-width:768px){
+.lyb-header{flex-direction:column;gap:16px;text-align:center}
+.lyb-header-left{flex-direction:column;gap:12px}
+.lyb-title{font-size:22px}
+.lyb-controls-left{flex-direction:column;gap:12px}
+.lyb-controls-right{flex-direction:column;width:100%}
+.lyb-search-wrapper{width:100%}
+.lyb-search{width:100%;max-width:none}
+.lyb-select{width:100%}
+.lyb-day{min-height:70px;padding:4px}
+.lyb-day-number{font-size:12px}
+.lyb-event-dot{font-size:0}
+.lyb-event-dot::before{width:5px;height:5px}
+.lyb-side-actions{flex-direction:column}
+.lyb-action-btn{max-width:none}
+.lyb-event-card{grid-template-columns:1fr;grid-template-rows:auto auto auto auto}
+.lyb-card-date{grid-column:1;grid-row:1;border-right:none;border-bottom:1px solid #e8e8ed}
+.lyb-card-details{grid-column:1;grid-row:2;border-right:none;border-bottom:1px solid #e8e8ed}
+.lyb-card-cta{grid-column:1;grid-row:3;border-right:none;border-bottom:1px solid #e8e8ed;min-height:180px}
+.lyb-card-expert{grid-column:1;grid-row:4;min-height:180px}
+.lyb-card-section{padding:16px}
+.lyb-event-title{font-size:18px}
+.lyb-weekday{padding:10px 4px;font-size:10px}
+}
+@media (max-width:480px){
+.landlord-yearbook{padding:12px}
+.lyb-logo{height:36px}
+.lyb-title{font-size:18px}
+.lyb-current-period{font-size:16px;min-width:120px}
+.lyb-day{min-height:60px}
+.lyb-day-number{font-size:11px}
+.lyb-day.today .lyb-day-number{width:22px;height:22px}
+}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<div class="landlord-yearbook" id="landlordYearbook">
+    <header class="lyb-header">
+        <div class="lyb-header-left">
+            <img src="https://lendlord.io/wp-content/uploads/2025/11/Lendlordlogo.png" alt="Lendlord" class="lyb-logo">
+            <h1 class="lyb-title">The Landlord Yearbook</h1>
+        </div>
+        <div class="lyb-header-right">
+            <button class="lyb-btn lyb-btn-outline" id="printSummaryBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                Print Summary
+            </button>
+        </div>
+    </header>
+
+    <div class="lyb-controls">
+        <div class="lyb-controls-row">
+            <div class="lyb-controls-left">
+                <div class="lyb-view-toggle">
+                    <button class="lyb-toggle-btn" data-view="week">Week</button>
+                    <button class="lyb-toggle-btn active" data-view="month">Month</button>
+                </div>
+                <div class="lyb-nav-arrows">
+                    <button class="lyb-nav-btn" id="prevBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+                    <span class="lyb-current-period" id="currentPeriod">January 2026</span>
+                    <button class="lyb-nav-btn" id="nextBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+                </div>
+            </div>
+            <div class="lyb-controls-right">
+                <div class="lyb-search-wrapper">
+                    <svg class="lyb-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    <input type="text" class="lyb-search" id="searchInput" placeholder="Search events (e.g., 'Tax', 'NRLA')">
+                </div>
+                <select class="lyb-select" id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="tax">Tax & Compliance</option>
+                    <option value="training">Training & Education</option>
+                    <option value="networking">Networking Events</option>
+                    <option value="market">Market Data & Reports</option>
+                    <option value="auction">Auctions</option>
+                    <option value="policy">Policy & Regulation</option>
+                    <option value="holiday">Bank Holidays</option>
+                </select>
+                <select class="lyb-select" id="investorFilter">
+                    <option value="">All Investor Types</option>
+                    <option value="btl">Buy-to-Let</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="development">Development</option>
+                    <option value="new">New Investors</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <p class="lyb-cta-text">Select a Date to Watch Events</p>
+
+    <div class="lyb-main-content">
+        <div class="lyb-calendar-container">
+            <div class="lyb-calendar-header">
+                <button class="lyb-btn lyb-btn-ghost" id="resetViewBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    Reset View
+                </button>
+            </div>
+            <div class="lyb-calendar-grid" id="calendarGrid"></div>
+        </div>
+        <div class="lyb-side-actions">
+            <button class="lyb-action-btn" id="addAllToCalendarBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+                Add Events to Calendar
+            </button>
+            <button class="lyb-action-btn lyb-action-whatsapp" id="shareWhatsAppBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Share on WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <div class="lyb-search-results" id="searchResults" style="display:none;">
+        <div class="lyb-search-results-header">
+            <h3>Search Results</h3>
+            <button class="lyb-btn lyb-btn-ghost" id="closeSearchResults">Close</button>
+        </div>
+        <div class="lyb-search-results-table" id="searchResultsTable"></div>
+    </div>
+
+    <div class="lyb-event-card" id="eventCard">
+        <div class="lyb-card-section lyb-card-date">
+            <div class="lyb-card-date-display" id="cardDate">01/01/2026</div>
+            <div class="lyb-event-selector" id="eventSelector"></div>
+        </div>
+        <div class="lyb-card-section lyb-card-details">
+            <h2 class="lyb-event-title" id="eventTitle">Select an Event</h2>
+            <button class="lyb-add-calendar-btn" id="addToCalendarBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Add Event to My Calendar
+                <span class="lyb-calendar-icons">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg" alt="Google" width="16" height="16">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg" alt="Outlook" width="16" height="16">
+                </span>
+            </button>
+            <div class="lyb-calendar-dropdown" id="calendarDropdown" style="display:none;">
+                <button class="lyb-dropdown-item" data-calendar="google">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg" alt="Google" width="20" height="20">Google Calendar
+                </button>
+                <button class="lyb-dropdown-item" data-calendar="outlook">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg" alt="Outlook" width="20" height="20">Outlook (Download .ics)
+                </button>
+            </div>
+            <p class="lyb-event-description" id="eventDescription">Click on an event to see details</p>
+            <div class="lyb-event-meta">
+                <a href="#" class="lyb-event-link" id="eventWebsite" target="_blank" style="display:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>Official Website</a>
+                <p class="lyb-event-location" id="eventLocation" style="display:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span id="locationText"></span></p>
+            </div>
+            <div class="lyb-navigation-links" id="navigationLinks" style="display:none;">
+                <span class="lyb-nav-label">Navigate to Event</span>
+                <div class="lyb-nav-icons">
+                    <a href="#" id="googleMapsLink" target="_blank" class="lyb-nav-icon" title="Google Maps"><img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Google_Maps_Logo_2020.svg" alt="Google Maps" width="24" height="24"></a>
+                    <a href="#" id="wazeLink" target="_blank" class="lyb-nav-icon" title="Waze"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Waze_Logo_2020.svg" alt="Waze" width="24" height="24"></a>
+                    <button class="lyb-nav-icon lyb-share-event" id="shareEventWhatsApp" title="Share on WhatsApp"><svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></button>
+                </div>
+            </div>
+        </div>
+        <div class="lyb-card-section lyb-card-cta" id="ctaSection">
+            <div class="lyb-cta-overlay"></div>
+            <div class="lyb-cta-content">
+                <p class="lyb-cta-description" id="ctaText">Track your property portfolio and stay compliant with Lendlord</p>
+                <a href="#" class="lyb-cta-button" id="ctaButton" target="_blank">Get Started with Lendlord</a>
+            </div>
+        </div>
+        <div class="lyb-card-section lyb-card-expert" id="expertSection">
+            <div class="lyb-expert-overlay"></div>
+            <div class="lyb-expert-content">
+                <span class="lyb-expert-badge">Expert Consultation</span>
+                <h3 class="lyb-expert-name" id="expertName">Expert Name</h3>
+                <p class="lyb-expert-help" id="expertHelp">Get expert advice for your property portfolio</p>
+                <a href="#" class="lyb-expert-btn" id="expertBookBtn" target="_blank">Schedule a Meeting</a>
+            </div>
+        </div>
+    </div>
+    <div class="lyb-no-events" id="noEventsMessage" style="display:none;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <p>No events scheduled for this date</p>
+    </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+
