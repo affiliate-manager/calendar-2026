@@ -73,21 +73,56 @@ def convert_csv_to_lyb_events(csv_file_path, js_file_path):
             category = clean_text(row.get('Event Type', ''))
             investor_type = clean_text(row.get('Event For Investor Type', ''))
             
-            # Map categories to short names used in LYB_EVENTS
+            # Map categories to short CSS-compatible names
             category_map = {
+                # From CSV Event Type column
                 'Auctions': 'auction',
                 'Tax & Fiscal Events': 'tax-fiscal',
+                'Tax & Fiscal': 'tax-fiscal',
                 'Tax Deadline': 'tax-fiscal',
+                'Tax Deadlines': 'tax-fiscal',
                 'Economic Indicators': 'economic',
+                'Economic': 'economic',
+                'Monetary Policy': 'economic',
                 'Energy & Utilities': 'energy',
+                'Energy & Sustainability': 'energy',
                 'Property Regulations': 'property',
+                'Property & Tenancy': 'property',
+                'Statutory & Regulatory': 'property',
+                'Administrative Deadlines': 'property',
+                'Quarter Days': 'property',
+                'Parliament Sessions': 'property',
                 'Conferences & Seminars': 'conference',
+                'Industry Conferences': 'conference',
                 'Training & Webinars': 'training',
+                'Training': 'training',
                 'Networking Events': 'conference',
+                'Networking': 'conference',
                 'Bank Holidays': 'holiday',
+                'Holiday': 'holiday',
+                'School Terms & Holidays': 'holiday',
                 'Market Reports': 'economic',
             }
-            category_lower = category_map.get(category, category.lower().replace(' ', '-'))
+            # Normalize the category for lookup
+            category_normalized = category.strip()
+            category_lower = category_map.get(category_normalized)
+            if not category_lower:
+                # Fallback: remove special chars and map
+                cat_clean = category.lower().replace('&', '').replace('-', ' ').strip()
+                cat_clean = ' '.join(cat_clean.split())  # normalize spaces
+                fallback_map = {
+                    'tax fiscal': 'tax-fiscal',
+                    'energy sustainability': 'energy',
+                    'property tenancy': 'property',
+                    'statutory regulatory': 'property',
+                    'school terms holidays': 'holiday',
+                    'industry conferences': 'conference',
+                    'administrative deadlines': 'property',
+                    'monetary policy': 'economic',
+                    'parliament sessions': 'property',
+                    'quarter days': 'property',
+                }
+                category_lower = fallback_map.get(cat_clean, 'property')
             
             # Map investor types
             investor_map = {
