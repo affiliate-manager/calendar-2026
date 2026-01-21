@@ -4,7 +4,7 @@
  */
 
 .lyb-calendar-widget,.lyb-calendar-widget *{box-sizing:border-box;margin:0;padding:0;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif!important}
-.lyb-calendar-widget{--primary:#EE9523;--primary-dark:#d4831d;--primary-light:#fef3e2;--text:#1d1d1f;--text-secondary:#86868b;--bg:#fff;--bg-secondary:#f5f5f7;--border:#d2d2d7;--shadow:0 4px 24px rgba(0,0,0,.08);--radius:12px;max-width:1400px!important;margin:0 auto!important;padding:10px!important;background:var(--bg)!important;min-height:100vh!important;display:flex!important;flex-direction:column!important}
+.lyb-calendar-widget{--primary:#EE9523;--primary-dark:#d4831d;--primary-light:#fef3e2;--text:#1d1d1f;--text-secondary:#86868b;--bg:#fff;--bg-secondary:#f5f5f7;--border:#d2d2d7;--shadow:0 4px 24px rgba(0,0,0,.08);--radius:12px;max-width:1400px!important;margin:0 auto!important;padding:10px!important;background:var(--bg)!important}
 .lyb-header{display:flex!important;align-items:center!important;justify-content:space-between!important;padding:8px 14px!important;background:var(--bg)!important;border-radius:var(--radius)!important;box-shadow:var(--shadow)!important;margin-bottom:8px!important;flex-wrap:wrap!important;gap:8px!important}
 .lyb-header-left{display:flex!important;align-items:center!important;gap:10px!important}
 .lyb-logo-link{display:flex!important;align-items:center!important;text-decoration:none!important;transition:opacity .2s!important}
@@ -30,10 +30,9 @@
 .lyb-search:focus{outline:none!important;border-color:var(--primary)!important;box-shadow:0 0 0 2px rgba(238,149,35,.15)!important}
 .lyb-select{padding:6px 10px!important;font-size:12px!important;border:1px solid var(--border)!important;border-radius:8px!important;background:var(--bg)!important;min-width:120px!important;cursor:pointer!important;color:var(--text)!important}
 .lyb-cta-text{text-align:center!important;font-size:12px!important;color:var(--text-secondary)!important;margin:6px 0!important}
-.lyb-main-content{display:flex!important;gap:12px!important;margin-bottom:0!important;align-items:flex-start!important;flex:1!important}
-.lyb-calendar-container{flex:1!important;min-width:0!important;display:flex!important;flex-direction:column!important;height:100%!important}
-.lyb-calendar-grid{flex:1!important;display:flex!important;flex-direction:column!important}
-.lyb-calendar-body{flex:1!important}
+.lyb-main-content{display:flex!important;gap:12px!important;margin-bottom:10px!important;align-items:flex-start!important}
+.lyb-calendar-container{flex:1!important;min-width:0!important;display:flex!important;flex-direction:column!important}
+.lyb-calendar-grid{flex:1!important}
 .lyb-sidebar-right{width:180px!important;flex-shrink:0!important;display:flex!important;flex-direction:column!important;gap:8px!important}
 .lyb-sidebar-actions{display:flex!important;flex-direction:column!important;gap:6px!important}
 .lyb-sidebar-btn{width:100%!important;justify-content:center!important;padding:8px 12px!important;font-size:11px!important;gap:6px!important;border-radius:16px!important}
@@ -49,20 +48,20 @@
 .lyb-expert-desc{font-size:10px!important;color:var(--text-secondary)!important;line-height:1.4!important;margin:0!important}
 .lyb-btn-expert{width:100%!important;justify-content:center!important;padding:8px 12px!important;font-size:11px!important;gap:6px!important;border-radius:16px!important;background:var(--text)!important;color:#fff!important;border:none!important}
 .lyb-btn-expert:hover{background:#333!important;transform:translateY(-1px)!important}
-.lyb-calendar-grid{background:var(--bg)!important;border-radius:var(--radius)!important;box-shadow:var(--shadow)!important;overflow:hidden!important;min-height:calc(100vh - 140px)!important}
+.lyb-calendar-grid{background:var(--bg)!important;border-radius:var(--radius)!important;box-shadow:var(--shadow)!important;overflow:hidden!important}
 .lyb-calendar-header{display:grid!important;grid-template-columns:repeat(7,1fr)!important;background:var(--bg-secondary)!important;border-bottom:1px solid var(--border)!important}
-.lyb-day-name{padding:6px 4px!important;text-align:center!important;font-size:10px!important;font-weight:600!important;color:var(--text-secondary)!important;text-transform:uppercase!important;letter-spacing:.3px!important}
+.lyb-day-name{padding:8px 4px!important;text-align:center!important;font-size:11px!important;font-weight:600!important;color:var(--text-secondary)!important;text-transform:uppercase!important;letter-spacing:.3px!important}
 .lyb-calendar-body{display:grid!important;grid-template-columns:repeat(7,1fr)!important}
-.lyb-day-cell{min-height:0!important;padding:4px!important;border-right:1px solid var(--border)!important;border-bottom:1px solid var(--border)!important;cursor:pointer!important;transition:background .2s!important;position:relative!important;background:var(--bg)!important;flex:1!important}
+.lyb-day-cell{min-height:64px!important;padding:5px!important;border-right:1px solid var(--border)!important;border-bottom:1px solid var(--border)!important;cursor:pointer!important;transition:background .2s!important;position:relative!important;background:var(--bg)!important}
 .lyb-day-cell:nth-child(7n){border-right:none!important}
 .lyb-day-cell:hover{background:var(--primary-light)!important}
 .lyb-day-cell.other-month{background:var(--bg-secondary)!important;opacity:.5!important}
 .lyb-day-cell.today{background:var(--primary-light)!important}
 .lyb-day-cell.selected{background:var(--primary)!important}
 .lyb-day-cell.selected .lyb-day-number{color:#fff!important}
-.lyb-day-number{font-size:12px!important;font-weight:600!important;color:var(--text)!important;margin-bottom:2px!important}
-.lyb-event-dots{display:flex!important;flex-wrap:wrap!important;gap:2px!important;margin-top:2px!important}
-.lyb-event-dot{width:6px!important;height:6px!important;border-radius:50%!important}
+.lyb-day-number{font-size:13px!important;font-weight:600!important;color:var(--text)!important;margin-bottom:3px!important}
+.lyb-event-dots{display:flex!important;flex-wrap:wrap!important;gap:3px!important;margin-top:3px!important}
+.lyb-event-dot{width:7px!important;height:7px!important;border-radius:50%!important}
 /* Event Category Colors - Updated */
 .lyb-event-dot.tax-fiscal{background:#ef4444!important}
 .lyb-event-dot.economic{background:#3b82f6!important}
@@ -78,7 +77,7 @@
 .lyb-event-dot.stats{background:#8b5cf6!important}
 .lyb-event-dot.reform{background:#10b981!important}
 .lyb-event-dot.event{background:var(--primary)!important}
-.lyb-event-card{display:none!important}
+.lyb-event-card{background:var(--bg)!important;border-radius:var(--radius)!important;box-shadow:var(--shadow)!important;overflow:hidden!important}
 .lyb-card-content{display:grid!important;grid-template-columns:repeat(3,1fr)!important;min-height:140px!important}
 .lyb-card-section{padding:10px!important;border-right:1px solid var(--border)!important}
 .lyb-card-section:last-child{border-right:none!important}
@@ -203,7 +202,6 @@
   .lyb-main-content{flex-direction:column!important;align-items:stretch!important}
   .lyb-sidebar-right{width:100%!important;order:2!important;flex-direction:row!important;flex-wrap:wrap!important;padding-top:0!important;gap:10px!important;align-items:flex-start!important}
   .lyb-sidebar-actions{flex-direction:row!important;width:auto!important;flex-shrink:0!important;gap:6px!important}
-  .lyb-calendar-grid{min-height:calc(100vh - 180px)!important}
   .lyb-sidebar-btn{font-size:12px!important;padding:8px 12px!important}
   .lyb-expert-sidebar{flex:1!important;min-width:200px!important}
   .lyb-expert-card{height:auto!important;padding:10px!important}
@@ -218,11 +216,9 @@
 }
 
 @media(max-width:768px){
-  .lyb-header{flex-direction:row!important;text-align:left!important;padding:6px 10px!important}
-  .lyb-header-left{flex-direction:row!important;gap:6px!important}
-  .lyb-title{font-size:14px!important}
-  .lyb-calendar-grid{min-height:calc(100vh - 160px)!important}
-  .lyb-sidebar-right{display:none!important}
+  .lyb-header{flex-direction:row!important;text-align:left!important;padding:8px 12px!important}
+  .lyb-header-left{flex-direction:row!important;gap:8px!important}
+  .lyb-title{font-size:16px!important}
   .lyb-logo{width:24px!important;height:24px!important}
   .lyb-controls{flex-direction:row!important;flex-wrap:wrap!important;gap:6px!important;margin-bottom:6px!important}
   .lyb-controls-left,.lyb-controls-right{width:auto!important;justify-content:flex-start!important}
@@ -260,10 +256,9 @@
 }
 
 @media(max-width:480px){
-  .lyb-calendar-widget{padding:4px!important}
-  .lyb-header{margin-bottom:4px!important;gap:4px!important;padding:4px 8px!important}
-  .lyb-title{font-size:13px!important}
-  .lyb-calendar-grid{min-height:calc(100vh - 120px)!important}
+  .lyb-calendar-widget{padding:6px!important}
+  .lyb-header{margin-bottom:4px!important;gap:6px!important;padding:6px 10px!important}
+  .lyb-title{font-size:14px!important}
   .lyb-logo{width:22px!important;height:22px!important}
   .lyb-controls{margin-bottom:4px!important;gap:4px!important}
   .lyb-search{width:90px!important;font-size:10px!important;padding:5px 6px!important}
@@ -298,10 +293,9 @@
 }
 
 @media(max-width:375px){
-  .lyb-calendar-widget{padding:2px!important}
-  .lyb-header{padding:4px 6px!important}
-  .lyb-title{font-size:12px!important}
-  .lyb-calendar-grid{min-height:calc(100vh - 100px)!important}
+  .lyb-calendar-widget{padding:4px!important}
+  .lyb-header{padding:4px 8px!important}
+  .lyb-title{font-size:13px!important}
   .lyb-logo{width:20px!important;height:20px!important}
   .lyb-controls{gap:3px!important}
   .lyb-search{width:80px!important;font-size:9px!important}
@@ -322,7 +316,7 @@
 /* ============================================
    Market Overview Box
    ============================================ */
-.lyb-market-overview{margin-top:20px!important;background:var(--bg)!important;border-radius:var(--radius)!important;padding:16px!important;box-shadow:var(--shadow)!important;border:1px solid var(--border)!important;flex-shrink:0!important}
+.lyb-market-overview{margin-top:16px!important;background:var(--bg)!important;border-radius:var(--radius)!important;padding:16px!important;box-shadow:var(--shadow)!important;border:1px solid var(--border)!important}
 .lyb-market-header{display:flex!important;justify-content:space-between!important;align-items:center!important;margin-bottom:12px!important;padding-bottom:10px!important;border-bottom:1px solid var(--border)!important}
 .lyb-market-title-group{display:flex!important;align-items:center!important;gap:8px!important}
 .lyb-market-icon{color:var(--primary)!important;width:18px!important;height:18px!important}
